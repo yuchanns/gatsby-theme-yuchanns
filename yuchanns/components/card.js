@@ -13,15 +13,15 @@ class Card extends React.Component {
   }
 
   componentDidMount() {
-    // window.addEventListener('scroll', () => {
-    //   const cardNameContainer = document.querySelector('#card-name-container')
-    //   const showResult = cardNameContainer.getBoundingClientRect().bottom <= 0
-    //   if (this.state.isShow !== showResult) {
-    //     this.setState({
-    //       isShow: showResult
-    //     })
-    //   }
-    // });
+    window.addEventListener('scroll', () => {
+      const cardNameContainer = document.querySelector('#card-name-container')
+      const showResult = cardNameContainer.getBoundingClientRect().bottom <= 0
+      if (this.state.isShow !== showResult) {
+        this.setState({
+          isShow: showResult
+        })
+      }
+    });
   }
 
   render() {
