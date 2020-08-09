@@ -1,0 +1,69 @@
+.markdown-body {
+  color: #1a1a1b;
+  font-family: Noto Sans,Arial,sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  word-break: break-word;
+  overflow: auto;
+  padding-bottom: 1px;
+  margin-bottom: -1px;
+  &:before,
+  &:after {
+    display: table;
+    content: "";
+  }
+  &>:last-child {
+    margin-bottom: 0;
+  }
+  &>:first-child {
+    margin-top: 0;
+  }
+  blockquote, details, dl, ol, p, pre, table, ul {
+    margin-top: 0;
+    margin-bottom: 16px;
+  }
+  ol, ul {
+    padding-left: 2em;
+  }
+  ul {
+    list-style: disc outside!important;
+  }
+  ol ol, ol ul, ul ol, ul ul {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  li+li {
+    margin-top: .25em;
+  }
+  a {
+    color: #0079d3;
+    text-decoration: underline;
+  }
+  code {
+    color: #ff006d;
+    margin: 0 2px;
+  }
+  code, pre code {
+    font-family: Noto Mono,Menlo,Monaco,Consolas,monospace;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 20px;
+  }
+  code, pre, pre code {
+    background: #f6f7f8;
+    max-width: 100%;
+    overflow: auto;
+  }
+  pre {
+    display: grid;
+    line-height: 1.4;
+    margin: 4px 0;
+    padding: 8px;
+  }
+  pre code {
+    background-color: transparent;
+    color: #1c1c1c;
+    margin: 0;
+  }
+}

@@ -17,6 +17,7 @@ module.exports = (options = {}) => {
       siteUrl: 'https://github.com/yuchanns'
     },
     plugins: [
+      `gatsby-theme-blog-core`,
       `gatsby-plugin-smoothscroll`,
       `gatsby-plugin-react-helmet`,
       {
