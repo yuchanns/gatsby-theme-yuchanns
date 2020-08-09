@@ -27,6 +27,7 @@ module.exports = (options = {}) => {
           },
         },
       },
+      `gatsby-plugin-sharp`,
       {
         resolve: `gatsby-transformer-remark`,
         options: {
@@ -40,7 +41,13 @@ module.exports = (options = {}) => {
                   },
                 },
               },
-            }
+            },
+            {
+              resolve: `gatsby-remark-images`,
+              options: {
+                maxWidth: 590,
+              },
+            },
           ],
         },
       },

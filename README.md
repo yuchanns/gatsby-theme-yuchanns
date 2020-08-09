@@ -1,10 +1,10 @@
 # gatsby-theme-yuchanns
 a blog theme for gatsby that combine github and reddit style.
 
-## status
+## Status
 [![Netlify Status](https://api.netlify.com/api/v1/badges/17a3fcac-b5da-4f2c-afac-15c144d28243/deploy-status)](https://app.netlify.com/sites/gatsby-theme-yuchanns/deploys)
 
-## dev
+## Dev
 ```sh
 # install
 yarn
@@ -13,3 +13,13 @@ yarn workspace example dev
 # build
 yarn workspace example build
 ```
+### Cautions
+In case of trouble with installing sharp or gatsby-plugin-sharp on **OSX**, mind that the latest version requires **python3** and **vips** pre-installed. And certainly command-line tools is the major premise.
+```sh
+# osx
+xcode-select --install
+brew install python3 vips
+```
+> In my case I had python2 installed already which caused a gyp error installing sharp. So I removed it first.
+>
+> Need `csrutil status` to be disabled.
