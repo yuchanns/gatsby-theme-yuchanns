@@ -19,7 +19,7 @@
   &>:first-child {
     margin-top: 0;
   }
-  blockquote, details, dl, ol, p, pre, table, ul {
+  blockquote, details, dl, ol, p, deckgo-highlight-code, table, ul {
     margin-top: 0;
     margin-bottom: 16px;
   }
@@ -40,28 +40,31 @@
     color: #0079d3;
     text-decoration: underline;
   }
+  // https://docs.deckdeckgo.com/components/code/#app-components-highlight-code-styling
+  deckgo-highlight-code {
+    --deckgo-highlight-code-font-size: 13px;
+    --deckgo-highlight-code-font-size-weight: 400;
+    --deckgo-highlight-code-line-height: 20px;
+    --deckgo-highlight-code-font-family: Noto Mono,Menlo,Monaco,Consolas,monospace;
+    --deckgo-highlight-code-padding: 0;
+    --deckgo-highlight-code-margin: 0;
+  }
   code {
     color: #ff006d;
     margin: 0 2px;
   }
-  code, pre code {
-    font-family: Noto Mono,Menlo,Monaco,Consolas,monospace;
-    font-size: 13px;
-    font-weight: 400;
-    line-height: 20px;
-  }
-  code, pre, pre code {
+  code, deckgo-highlight-code, deckgo-highlight-code code {
     background: #f6f7f8;
     max-width: 100%;
     overflow: auto;
   }
-  pre {
+  deckgo-highlight-code {
     display: grid;
     line-height: 1.4;
     margin: 4px 0;
     padding: 8px;
   }
-  pre code {
+  deckgo-highlight-code code {
     background-color: transparent;
     color: #1c1c1c;
     margin: 0;
