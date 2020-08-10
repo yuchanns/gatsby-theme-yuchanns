@@ -1,0 +1,17 @@
+version: '3'
+services:
+  node:
+    container_name: 'gatsby-theme-yuchanns'
+    build:
+      dockerfile: dockerfile
+      context: .
+    ports:
+      - '8000:8000'
+    volumes:
+      - .:/app
+    networks:
+      - code-network
+    command: ['sh', '-c', './init.sh']
+networks:
+  code-network:
+    driver: bridge
