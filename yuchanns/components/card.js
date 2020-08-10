@@ -10,10 +10,7 @@ class Card extends React.Component {
     this.state = {
       isShow: false,
     }
-  }
-
-  componentDidMount() {
-    window.addEventListener('scroll', () => {
+    this.scrollEvent = () => {
       const cardNameContainer = document.querySelector('#card-name-container')
       const showResult = cardNameContainer.getBoundingClientRect().bottom <= 0
       if (this.state.isShow !== showResult) {
@@ -21,7 +18,15 @@ class Card extends React.Component {
           isShow: showResult
         })
       }
-    });
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.scrollEvent);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.scrollEvent)
   }
 
   render() {
