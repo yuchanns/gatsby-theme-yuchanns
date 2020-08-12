@@ -48,6 +48,13 @@
     --deckgo-highlight-code-font-family: Noto Mono,Menlo,Monaco,Consolas,monospace;
     --deckgo-highlight-code-padding: 0;
     --deckgo-highlight-code-margin: 0;
+    --deckgo-highlight-code-token-atrule: #d73a49;
+    --deckgo-highlight-code-token-function: #6f42c1;
+    --deckgo-highlight-code-token-selector: #032f62;
+    --deckgo-highlight-code-token-property: #005cc5;
+    --deckgo-highlight-code-token-operator: #005cc5;
+    --deckgo-highlight-code-token-comment: #6a737d;
+    --deckgo-highlight-code-token-regex: #e36209;
   }
   code {
     color: #ff006d;
