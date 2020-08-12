@@ -7,7 +7,7 @@ class LazyImg extends React.Component {
       isLoad: false,
     }
   }
-  componentWillMount() {
+  componentDidMount() {
     const avatarImg = new Image()
     avatarImg.src = this.props.src
     avatarImg.onload = () => {
