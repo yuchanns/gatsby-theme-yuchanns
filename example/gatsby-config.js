@@ -12,7 +12,7 @@ module.exports = {
     },
     nav: [
       { 'name': '首页', 'url': '/' },
-      { 'name': '关于', 'url': '/readme' }
+      { 'name': '关于', 'url': '/r/readme/readme' }
     ],
     siteUrl: 'https://github.com/yuchanns'
   },

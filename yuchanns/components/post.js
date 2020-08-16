@@ -3,30 +3,36 @@ import moment from 'moment'
 import { Link } from 'gatsby'
 import styles from '../styles/common.module.scss'
 
-const Post = ({ post }) => {
+const Post = ({ post, detail=false }) => {
   const format = date => {
     return moment(date, 'YYYY-MM-DD[T]HH:mm:ss.SSS[Z]').fromNow()
+  }
+  let postClassName = `${styles.postsMainBlock}`
+  if (!detail) {
+    postClassName = `${postClassName} ${styles.postsMainLimit} ${styles.mask}`
   }
   return (
     <div className={styles.postsItem}>
       <div className={styles.postsContent}>
-        <div className={styles.postsInfoContainer}>
-          <div className={styles.postsInfoBlock}>
-            <div className={styles.postsInfoDate}>
-              <span className={styles.postsInfoDateText}>Posted {format(post.frontmatter.date)}</span>
+        <Link to={post.frontmatter.path}>
+          <div className={styles.postsInfoContainer}>
+            <div className={styles.postsInfoBlock}>
+              <div className={styles.postsInfoDate}>
+                <span className={styles.postsInfoDateText}>Posted {format(post.frontmatter.date)}</span>
+              </div>
             </div>
           </div>
-        </div>
-        <div className={styles.postsTitleContainer}>
-          <div className={styles.postsTitleBlock}>
-            <div className={styles.postsTitleBox}>
-              <h3 className={styles.postsTitleText}>{post.frontmatter.title}</h3>
+          <div className={styles.postsTitleContainer}>
+            <div className={styles.postsTitleBlock}>
+              <div className={styles.postsTitleBox}>
+                <h3 className={styles.postsTitleText}>{post.frontmatter.title}</h3>
+              </div>
             </div>
           </div>
-        </div>
+        </Link>
         <div className={styles.postsMainContainer}>
-          <div className={`${styles.postsMainBlock} ${styles.mask}`}>
-            <div className={`markdown-body`} dangerouslySetInnerHTML={{__html: post.excerpt}}></div>
+          <div className={postClassName}>
+            <div className={`markdown-body`} dangerouslySetInnerHTML={{__html: detail ? post.html : post.excerpt}}></div>
           </div>
         </div>
         <div className={styles.postsTopicsContainer}>

@@ -19,9 +19,53 @@
   &>:first-child {
     margin-top: 0;
   }
+  h1 {
+    font-size: 2em;
+  }
+  h2 {
+    font-size: 1.5em;
+  }
+  h3 {
+    font-size: 1.25em;
+  }
+  h4 {
+    font-size: 1em;
+  }
+  h5 {
+    font-size: .875em;
+  }
+  h6 {
+    font-size: .85em;
+  }
+  h1, h2 {
+    padding-bottom: .3em;
+    border-bottom: 1px solid #eaecef;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  hr {
+    height: 1px;
+    padding: 0;
+    margin: 24px 0;
+    background-color: #eaecef;
+    border: 0;
+    overflow: hidden;
+    box-sizing: initial;
+  }
+  blockquote {
+    border-left: 4px solid rgba(28,28,28,0.2);
+    padding-left: 8px;
+  }
   blockquote, details, dl, ol, p, deckgo-highlight-code, table, ul {
     margin-top: 0;
     margin-bottom: 16px;
+  }
+  img {
+    max-width: 100%;
+    box-sizing: initial;
   }
   ol, ul {
     padding-left: 2em;
@@ -35,6 +79,11 @@
   }
   li+li {
     margin-top: .25em;
+  }
+  li[id^="fn-"] {
+    p {
+      display: inline
+    }
   }
   a {
     color: #0079d3;

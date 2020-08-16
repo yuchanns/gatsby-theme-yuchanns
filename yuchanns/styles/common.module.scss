@@ -593,8 +593,10 @@
       margin-top: 8px;
     }
     &-block {
-      max-height: 250px;
       padding: 5px 16px 10px;
+    }
+    &-limit {
+      max-height: 250px;
     }
   }
   &-topics {
