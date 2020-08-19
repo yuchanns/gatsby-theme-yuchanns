@@ -13,9 +13,16 @@ const Head = () => {
           <div className={`${styles.headBlock} ${styles.headBlockNav}`}>
             <div className={styles.navContainer}>
               <nav className={styles.navBody}>
-              {nav.map(item => (
-                <Link className={styles.navItem} to={item.url} activeClassName={styles.navItemSelected} key={item.name}>{item.name}</Link>
-              ))}
+              {nav.map(item => {
+                if (item.hasOwnProperty('external') && item['external'] === true) {
+                  return (
+                    <a className={styles.navItem} to={item.url} activeClassName={styles.navItemSelected} key={item.name}>{item.name}</a>
+                  )
+                }
+                return (
+                  <Link className={styles.navItem} to={item.url} activeClassName={styles.navItemSelected} key={item.name}>{item.name}</Link>
+                )
+              })}
               </nav>
             </div>
           </div>

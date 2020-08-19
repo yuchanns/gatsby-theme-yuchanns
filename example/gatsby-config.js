@@ -12,7 +12,8 @@ module.exports = {
     },
     nav: [
       { 'name': '首页', 'url': '/' },
-      { 'name': '关于', 'url': '/r/readme/readme' }
+      { 'name': '关于', 'url': '/r/readme/readme' },
+      { 'name': '作者', 'url': '//yuchanns.org', 'external': true }
     ],
     siteUrl: 'https://github.com/yuchanns'
   },
