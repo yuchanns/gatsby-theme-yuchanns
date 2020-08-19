@@ -16,7 +16,7 @@ const Head = () => {
               {nav.map(item => {
                 if (item.hasOwnProperty('external') && item['external'] === true) {
                   return (
-                    <a className={styles.navItem} to={item.url} activeClassName={styles.navItemSelected} key={item.name}>{item.name}</a>
+                    <a className={styles.navItem} href={item.url} activeClassName={styles.navItemSelected} key={item.name}>{item.name}</a>
                   )
                 }
                 return (
