@@ -3,7 +3,7 @@ import { useStaticQuery, graphql } from 'gatsby'
 export const useSiteMetadata = () => {
   const { site } = useStaticQuery(
     graphql`
-      query SiteMeataData {
+      query SiteMetaData {
         site {
           siteMetadata {
             nav {
