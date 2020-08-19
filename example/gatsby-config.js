@@ -12,7 +12,8 @@ module.exports = {
     },
     nav: [
       { 'name': '首页', 'url': '/' },
-      { 'name': 'Yc\'s Anime', 'url': '//yuc.wiki/', 'external': true }
+      { 'name': 'Awesome', 'url': '/r/readme/awesome' },
+      { 'name': 'Yuc\'s Anime', 'url': '//yuc.wiki/', 'external': true }
     ],
     siteUrl: 'https://github.com/yuchanns'
   },
