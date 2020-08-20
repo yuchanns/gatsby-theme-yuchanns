@@ -33,6 +33,7 @@ module.exports = (options = {}) => {
         resolve: `gatsby-transformer-remark`,
         options: {
           plugins: [
+            `gatsby-remark-mathjax`,
             `gatsby-remark-flowchart`,
             {
               resolve: "gatsby-remark-custom-blocks",
