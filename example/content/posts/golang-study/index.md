@@ -178,7 +178,7 @@ func main() {
 * 普通函数和匿名函数都可以作为结构体字段或经通道传递
 
 * go交叉编译：
-  ```sh
+  ```bash
   GOOS=linux GOARCH=amd64 go build -gcflags "-N -l" -v  
   ```
 
@@ -257,7 +257,7 @@ func main() {
   ```
 * 字典迭代期间增删键值是**安全**的。不能对字典进行并发操作，会导致进程崩溃
   * 启用`data race`检查问题
-    ```sh
+    ```bash
     go run -race test.go
     ```
   * 使用`sync.RWMutex`实现同步，避免读写操作同时进行

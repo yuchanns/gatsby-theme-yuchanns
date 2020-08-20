@@ -185,7 +185,7 @@ func main() {
 %+v   扩展格式。错误栈中的每一帧都会被详细地打印出来
 ```
 前两个没什么特殊的，当我们使用`fmt.Printf("%+v\n", err)`进行打印时，发现除了字符串错误信息，“文件名”、“函数名”、“代码行数”也一并洋洋洒洒地输出在终端中！
-```sh
+```bash
 an error
 github.com/yuchanns/gobyexample/errors.TestPkgErrors
 	/Users/yuchanns/Coding/golang/gobyexample/errors/pkg_errors_test.go:10
