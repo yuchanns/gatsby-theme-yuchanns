@@ -113,7 +113,7 @@ func As(err error, target interface{}) bool {
 ```
 
 这个方法有什么用呢？前文中提到，在其他语言中可以通过捕获不同类型的错误来有选择地后续处理的错误，在理解了error本质是一个接口时，我们实际上也可以通过类型断言的方式(`pe, ok := err.(PathErr)`)来判断返回的错误是**PathErr**还是**SyscallError**。但是如果用到递归记录错误信息的结构时，就难以直接通过这种方式来判断某一层的错误类型。递归的错误需要递归地**Unwrap**判断——此时我们再回顾**As**这个方法便明白了它的用途：判断返回的错误中是否递归包含了某个类型的错误，并且在肯定的情况下获取那个错误的信息，相当于实现了：
-```php
+```
 try {
   // ... something will cause FileNotFoundException
 } catch (FileNotFoundException $e) {
