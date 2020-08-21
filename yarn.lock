@@ -6895,10 +6895,10 @@ gatsby-remark-custom-blocks@^2.3.10:
     "@babel/runtime" "^7.10.3"
     remark-custom-blocks "^2.5.0"
 
-gatsby-remark-flowchart@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.npm.taobao.org/gatsby-remark-flowchart/download/gatsby-remark-flowchart-0.0.1.tgz#4afe0e3a563b68f66a94c1ed3ef2cbbb32fec1e7"
-  integrity sha1-Sv4OOlY7aPZqlMHtPvLLuzL+wec=
+gatsby-remark-flowchart-ver-yuchanns@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.npm.taobao.org/gatsby-remark-flowchart-ver-yuchanns/download/gatsby-remark-flowchart-ver-yuchanns-0.0.2.tgz?cache=0&sync_timestamp=1598025527991&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fgatsby-remark-flowchart-ver-yuchanns%2Fdownload%2Fgatsby-remark-flowchart-ver-yuchanns-0.0.2.tgz#6d2d60b19a2db2874999fb3702795de8a871dc47"
+  integrity sha1-bS1gsZotsodJmfs3Anld6Khx3Ec=
   dependencies:
     unist-util-visit "^1.1.3"
 

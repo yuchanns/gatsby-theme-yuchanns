@@ -27,7 +27,7 @@
     "gatsby-plugin-sharp": "^2.6.25",
     "gatsby-plugin-smoothscroll": "^1.2.0",
     "gatsby-remark-custom-blocks": "^2.3.10",
-    "gatsby-remark-flowchart": "^0.0.1",
+    "gatsby-remark-flowchart-ver-yuchanns": "^0.0.2",
     "gatsby-remark-highlight-code": "^1.4.6",
     "gatsby-remark-images": "^3.3.25",
     "gatsby-remark-mathjax": "^1.0.0",

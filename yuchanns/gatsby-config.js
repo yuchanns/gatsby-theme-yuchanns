@@ -34,7 +34,7 @@ module.exports = (options = {}) => {
         options: {
           plugins: [
             `gatsby-remark-mathjax`,
-            `gatsby-remark-flowchart`,
+            `gatsby-remark-flowchart-ver-yuchanns`,
             {
               resolve: "gatsby-remark-custom-blocks",
               options: {
