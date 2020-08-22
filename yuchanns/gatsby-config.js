@@ -1,4 +1,5 @@
 module.exports = (options = {}) => {
+  const path = require('path')
   return {
     siteMetadata: {
       title: 'Gatsby Theme - Yuchanns',
@@ -17,6 +18,12 @@ module.exports = (options = {}) => {
       siteUrl: 'https://github.com/yuchanns'
     },
     plugins: [
+      {
+        resolve: `gatsby-plugin-layout`,
+        options: {
+          component: path.resolve(__dirname, 'components/global-layout'),
+        },
+      },
       `gatsby-theme-blog-core`,
       `gatsby-plugin-smoothscroll`,
       `gatsby-plugin-react-helmet`,
