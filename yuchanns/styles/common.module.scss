@@ -615,11 +615,14 @@
       font-weight: 700;
       line-height: 16px;
       height: 32px;
-      overflow: hidden;
+      overflow: auto;
       padding: 0 8px 0 4px;
       flex-grow: 1;
       padding-left: 16px;
       padding-bottom: 8px;
+      &::-webkit-scrollbar {
+        width: 0;
+      }
     }
     &-tag {
       margin: 0 .5em .333em 0;
