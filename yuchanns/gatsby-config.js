@@ -19,6 +19,12 @@ module.exports = (options = {}) => {
     },
     plugins: [
       {
+        resolve: `gatsby-plugin-nprogress`,
+        options: {
+          // color: `#0366d6`,
+        },
+      },
+      {
         resolve: `gatsby-plugin-layout`,
         options: {
           component: path.resolve(__dirname, 'components/global-layout'),
