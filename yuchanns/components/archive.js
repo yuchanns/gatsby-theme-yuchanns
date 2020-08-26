@@ -4,9 +4,8 @@ import TimeLine from './timeline'
 import Posts from './posts'
 import styles from '../styles/common.module.scss'
 
-const Archive = () => {
+const Archive = ({ selectedTime, setSelectedTime }) => {
   const { posts, timeline } = usePosts()
-  const [selectedTime, setSelectedTime] = useState(timeline.length > 0 ? timeline[0] : 0)
   const [displayAllPosts, setDisplay] = useState(false)
 
   const watchMediaWidth = () => {
