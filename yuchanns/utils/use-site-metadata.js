@@ -9,6 +9,7 @@ export const useSiteMetadata = () => {
             nav {
               name
               url
+              external
             }
             description
             card {
