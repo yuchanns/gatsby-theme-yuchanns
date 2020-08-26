@@ -1,5 +1,12 @@
 import './styles/global.scss'
 import scrollTo from 'gatsby-plugin-smoothscroll'
+import { defineCustomElements as deckDeckGoHighlightElement } from '@deckdeckgo/highlight-code/dist/loader';
+import { setMathJaxConfig } from './utils/use-mathjax'
+
+export const onInitialClientRender = () => {
+    deckDeckGoHighlightElement()
+    setMathJaxConfig()
+}
 
 export const shouldUpdateScroll = ({
     routerProps: { location },

@@ -2,8 +2,6 @@ import React from 'react'
 import Background from './background'
 import Card from './card'
 import styles from '../styles/common.module.scss'
-import { defineCustomElements as deckDeckGoHighlightElement } from '@deckdeckgo/highlight-code/dist/loader';
-deckDeckGoHighlightElement();
 
 const Layout = ({ children }) => {
   return (
