@@ -1,6 +1,7 @@
 import React from 'react'
-import Head from '../components/head'
-import Layout from '../components/layout'
+import Head from './head'
+import Layout from './layout'
+import Transition from "./transition"
 
 class GlobalLayout extends React.Component {
   render() {
@@ -8,7 +9,7 @@ class GlobalLayout extends React.Component {
       <React.Fragment>
         <Head />
         <Layout>
-          {this.props.children}
+          <Transition location={this.props.location}>{this.props.children}</Transition>
         </Layout>
       </React.Fragment>
     )
