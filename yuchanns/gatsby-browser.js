@@ -5,6 +5,10 @@ import { setMathJaxConfig } from './utils/use-mathjax'
 
 export const onInitialClientRender = () => {
     deckDeckGoHighlightElement()
+}
+
+export const onRouteUpdate = () => {
+    // the mathJax config should be set each time route update
     setMathJaxConfig()
 }
 
