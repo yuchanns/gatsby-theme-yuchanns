@@ -38,7 +38,7 @@ const Archive = () => {
   return (
     <div className={styles.postsContainer}>
       <div style={{ display: 'flex' }}>
-        <Posts posts={timePosts} />
+        <Posts posts={timePosts} time={selectedTime} />
         <TimeLine timeline={timeline} setTime={setSelectedTime} time={selectedTime} />
       </div>
     </div>
