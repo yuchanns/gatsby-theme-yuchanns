@@ -316,8 +316,9 @@
     margin-top: 15px;
     &:hover .about-content,
     &:active .about-content {
-      max-height: 320px;
+      max-height: 450px;
       transition: max-height .36s ease-out;
+      transition-delay: 1s;
     }
     @media (min-width: 768px) {
       transform: scale(1);
@@ -326,6 +327,7 @@
       &:active {
         transform: scale(1.05);
         transition: transform .36s ease-out;
+        transition-delay: 1s;
       }
     }
   }
