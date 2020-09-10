@@ -8,7 +8,7 @@ module.exports = {
       nick: '科学搜查官',
       job: '后端开发工程师',
       location: 'Shenzhen, China',
-      desc: 'Too much want to know, so little time to learn.',
+      desc: '理想的生活是纯粹地热爱技术',
     },
     nav: [
       { 'name': '首页', 'url': '/' },
