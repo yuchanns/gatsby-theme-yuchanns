@@ -4,7 +4,7 @@ import styles from '../styles/common.module.scss'
 
 const Search = () => {
   return (
-    <div className={`${styles.searchContainer} ${styles.bodyBorder}`}>
+    <div className={`${styles.searchContainer} ${styles.bodyBorder}`} id='searchBar'>
       <div className={styles.searchBody}>
         <div className={styles.searchBox}>
           <input type="search" className={styles.searchInput} placeholder="Find a post..." />

@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react'
 import { usePosts } from '../utils/use-posts'
 import TimeLine from './timeline'
 import Posts from './posts'
+import scrollTo from 'gatsby-plugin-smoothscroll'
 import styles from '../styles/common.module.scss'
 
 const Archive = ({ selectedTime, setSelectedTime }) => {
@@ -38,7 +39,10 @@ const Archive = ({ selectedTime, setSelectedTime }) => {
     <div className={styles.postsContainer}>
       <div style={{ display: 'flex' }}>
         <Posts posts={timePosts} time={selectedTime} />
-        <TimeLine timeline={timeline} setTime={setSelectedTime} time={selectedTime} />
+        <TimeLine timeline={timeline} setTime={(time) => {
+          window.setTimeout(() => scrollTo('#searchBar'), 500)
+          setSelectedTime(time)
+        }} time={selectedTime} />
       </div>
     </div>
   )
