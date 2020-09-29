@@ -28,20 +28,21 @@ const Archive = ({
   })
   
   const timePosts = useMemo(() => {
+    let allPosts = []
+
     if (displayAllPosts) {
-      const allPosts = []
       timeline.forEach(time => {
         allPosts.push.apply(allPosts, posts[time])
       })
-
-      return allPosts
+    } else {
+      allPosts = posts.hasOwnProperty(selectedTime) ? posts[selectedTime] : []
     }
 
-    const timePosts = posts.hasOwnProperty(selectedTime) ? posts[selectedTime] : []
     const filteredPosts = []
     const strCategory = String(selectedCategory)
     const strTag = String(selectedTag)
-    timePosts.forEach(post => {
+
+    allPosts.forEach(post => {
       if (
         (strCategory === 'All' && strTag === 'All') ||
         (strTag === 'All' && post.frontmatter.category === strCategory) ||
