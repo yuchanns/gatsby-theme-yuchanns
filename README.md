@@ -39,3 +39,6 @@ docker-compose start
 # drop container
 docker-compose down
 ```
+
+## LICENSE
+[@yuchanns](yuchanns/LICENSE)
