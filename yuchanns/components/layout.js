@@ -8,6 +8,8 @@ import styles from '../styles/common.module.scss'
 const Layout = ({ children }) => {
   const { timeline } = usePosts()
   const [selectedTime, setSelectedTime] = useState(timeline.length > 0 ? timeline[0] : 0)
+  const [selectedCategory, setSelectedCategory] = useState('All')
+  const [selectedTag, setSelectedTag] = useState('All')
 
   return (
     <div className={`${styles.container} ${styles.bodyContainer}`}>
@@ -18,6 +20,10 @@ const Layout = ({ children }) => {
           <SelectStateCtx.Provider value={{
             selectedTime: selectedTime,
             setSelectedTime: setSelectedTime,
+            selectedCategory: selectedCategory,
+            setSelectedCategory: setSelectedCategory,
+            selectedTag: selectedTag,
+            setSelectedTag: setSelectedTag,
           }}>
             {children}
           </SelectStateCtx.Provider>

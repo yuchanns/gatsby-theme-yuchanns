@@ -25,9 +25,15 @@ export const usePosts = () => {
   const originPosts = allMarkdownRemark.nodes
   const timelinePosts = {}
   const topPosts = []
+  const setOfCatetory = new Set()
+  const setOfTag = new Set()
   originPosts.forEach(post => {
     const fileName = post.fileAbsolutePath.split('/')
     post.frontmatter.path = `/r/${post.frontmatter.category}/${fileName[fileName.length - 2]}`
+    setOfCatetory.add(post.frontmatter.category)
+    post.frontmatter.tags.forEach(tag => {
+      setOfTag.add(tag)
+    })
     const year = moment(post.frontmatter.date, 'YYYY-MM-DD[T]HH:mm:ss.SSS[Z]').format('YYYY')
     if (!timelinePosts.hasOwnProperty(year)) {
       timelinePosts[year] = [];
@@ -55,6 +61,8 @@ export const usePosts = () => {
   return {
     posts: finalPosts,
     timeline: timeline,
-    topPost: topPosts.length > 0 ? topPosts[0] : {}
+    topPost: topPosts.length > 0 ? topPosts[0] : {},
+    categories: setOfCatetory,
+    tags: setOfTag,
   }
 }

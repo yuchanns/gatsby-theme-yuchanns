@@ -5,7 +5,12 @@ import Posts from './posts'
 import scrollTo from 'gatsby-plugin-smoothscroll'
 import styles from '../styles/common.module.scss'
 
-const Archive = ({ selectedTime, setSelectedTime }) => {
+const Archive = ({
+  selectedTime,
+  setSelectedTime,
+  selectedCategory,
+  selectedTag,
+}) => {
   const { posts, timeline } = usePosts()
   const [displayAllPosts, setDisplay] = useState(false)
 
@@ -32,13 +37,28 @@ const Archive = ({ selectedTime, setSelectedTime }) => {
       return allPosts
     }
 
-    return posts.hasOwnProperty(selectedTime) ? posts[selectedTime] : []
-  }, [selectedTime, posts, displayAllPosts, timeline])
+    const timePosts = posts.hasOwnProperty(selectedTime) ? posts[selectedTime] : []
+    const filteredPosts = []
+    const strCategory = String(selectedCategory)
+    const strTag = String(selectedTag)
+    timePosts.forEach(post => {
+      if (
+        (strCategory === 'All' && strTag === 'All') ||
+        (strTag === 'All' && post.frontmatter.category === strCategory) ||
+        (strCategory === 'All' && post.frontmatter.tags.includes(strTag)) ||
+        (post.frontmatter.category === strCategory && post.frontmatter.tags.includes(strTag))
+      ) {
+        filteredPosts.push(post)
+      }
+    })
+
+    return filteredPosts
+  }, [selectedTime, posts, displayAllPosts, timeline, selectedCategory, selectedTag])
 
   return (
     <div className={styles.postsContainer}>
       <div style={{ display: 'flex' }}>
-        <Posts posts={timePosts} time={selectedTime} />
+        <Posts posts={timePosts} pathname={`${selectedTime} ${selectedCategory} ${selectedTag}`} />
         <TimeLine timeline={timeline} setTime={(time) => {
           window.setTimeout(() => scrollTo('#searchBar'), 500)
           setSelectedTime(time)
