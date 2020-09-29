@@ -11,10 +11,22 @@ class Home extends React.Component {
       <React.Fragment>
         <SEO title="Home" />
         <Top />
-        <Search />
         <SelectStateCtx.Consumer>
           {ctx => (
-            <Archive selectedTime={ctx.selectedTime} setSelectedTime={ctx.setSelectedTime} />
+            <React.Fragment>
+              <Search
+                category={ctx.selectedCategory}
+                tag={ctx.selectedTag}
+                setCategory={ctx.setSelectedCategory}
+                setTag={ctx.setSelectedTag}
+              />
+              <Archive
+                selectedTime={ctx.selectedTime}
+                setSelectedTime={ctx.setSelectedTime}
+                selectedCategory={ctx.selectedCategory}
+                selectedTag={ctx.selectedTag}
+              />
+            </React.Fragment>
           )}
         </SelectStateCtx.Consumer>
       </React.Fragment>
