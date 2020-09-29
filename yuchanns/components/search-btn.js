@@ -50,6 +50,7 @@ const SearchBtn = ({ label, set, setLabel, selected }) => {
                     id={item}
                     value={item}
                     onClick={() => {
+                      hideLabel()
                       setLabel(item)
                     }}
                     hidden="hidden"
