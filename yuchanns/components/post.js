@@ -13,17 +13,45 @@ const Post = ({ post, detail=false }) => {
   if (!detail) {
     postClassName = `${postClassName} ${styles.postsMainLimit} ${styles.mask}`
   }
+  const hashStringToColor = str => {
+    let hash = 5381
+    for (let i = 0; i < str.length; i++) {
+      hash = ((hash << 5) + hash) + str.charCodeAt(i)
+    }
+    let r = (hash & 0xFF0000) >> 16
+    let g = (hash & 0x00FF00) >> 8
+    let b = hash & 0x0000FF
+    const result = "#" + ("0" + r.toString(16)).substr(-2) + ("0" + g.toString(16)).substr(-2) + ("0" + b.toString(16)).substr(-2)
+    console.log(result)
+    return result
+  }
+
   return (
     <div className={styles.postsItem}>
       <div className={styles.postsContent}>
-        <Link to={post.frontmatter.path}>
           <div className={styles.postsInfoContainer}>
             <div className={styles.postsInfoBlock}>
               <div className={styles.postsInfoDate}>
+                <SelectStateCtx.Consumer>
+                  {ctx => (
+                    <button
+                      className={styles.postsInfoCategory}
+                      onClick={() => {
+                          ctx.setSelectedCategory(post.frontmatter.category)
+                          navigate('/')
+                      }}>
+                      <span
+                        className={styles.postsInfoCategoryIcon}
+                        style={{ backgroundColor: hashStringToColor(post.frontmatter.category) }} />
+                      <span className={styles.postsInfoCategoryText}>{post.frontmatter.category}</span>
+                    </button>
+                  )}
+                </SelectStateCtx.Consumer>
                 <span className={styles.postsInfoDateText}>Posted {format(post.frontmatter.date)}</span>
               </div>
             </div>
-          </div>
+        </div>
+        <Link to={post.frontmatter.path}>
           <div className={styles.postsTitleContainer}>
             <div className={styles.postsTitleBlock}>
               <div className={styles.postsTitleBox}>
