@@ -13,18 +13,6 @@ const Post = ({ post, detail=false }) => {
   if (!detail) {
     postClassName = `${postClassName} ${styles.postsMainLimit} ${styles.mask}`
   }
-  const hashStringToColor = str => {
-    let hash = 5381
-    for (let i = 0; i < str.length; i++) {
-      hash = ((hash << 5) + hash) + str.charCodeAt(i)
-    }
-    let r = (hash & 0xFF0000) >> 16
-    let g = (hash & 0x00FF00) >> 8
-    let b = hash & 0x0000FF
-    const result = "#" + ("0" + r.toString(16)).substr(-2) + ("0" + g.toString(16)).substr(-2) + ("0" + b.toString(16)).substr(-2)
-    console.log(result)
-    return result
-  }
 
   return (
     <div className={styles.postsItem}>
@@ -42,7 +30,7 @@ const Post = ({ post, detail=false }) => {
                       }}>
                       <span
                         className={styles.postsInfoCategoryIcon}
-                        style={{ backgroundColor: hashStringToColor(post.frontmatter.category) }} />
+                        style={{ backgroundColor: post.frontmatter.categoryIconColor }} />
                       <span className={styles.postsInfoCategoryText}>{post.frontmatter.category}</span>
                     </button>
                   )}
