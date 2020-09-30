@@ -1,6 +1,8 @@
 import React from 'react'
 import moment from 'moment'
 import { Link } from 'gatsby'
+import { SelectStateCtx } from '../utils/use-context'
+import { navigate } from "@reach/router"  
 import styles from '../styles/common.module.scss'
 
 const Post = ({ post, detail=false }) => {
@@ -37,9 +39,21 @@ const Post = ({ post, detail=false }) => {
         </div>
         <div className={styles.postsTopicsContainer}>
           <div className={styles.postsTopicsBlock}>
-          {post.frontmatter.tags.map(tag => (
-            <Link className={styles.postsTopicsTag} to='/' key={tag}>{tag}</Link>
-          ))}
+            <SelectStateCtx.Consumer>
+              {ctx => {
+                return post.frontmatter.tags.map(tag => (
+                  <button
+                    className={styles.postsTopicsTag}
+                    to='/'
+                    key={tag}
+                    onClick={() => {
+                      ctx.setSelectedTag(tag)
+                      navigate('/')
+                    }}
+                  >{tag}</button>
+                ))
+              }}
+            </SelectStateCtx.Consumer>
           </div>
         </div>
       </div>
