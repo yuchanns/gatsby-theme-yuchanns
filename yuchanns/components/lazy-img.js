@@ -1,4 +1,5 @@
 import React from 'react'
+import styles from '../styles/common.module.scss'
 
 class LazyImg extends React.Component {
   constructor() {
@@ -24,18 +25,17 @@ class LazyImg extends React.Component {
       <React.Fragment>
         {this.state.isLoad ?
           (<img
-            className={this.props.className}
+            className={`${styles.lazyImage} ${this.props.className}`}
             width={this.props.width}
             height={this.props.height}
             src={this.props.src}
             alt={this.props.alt} />) :
           (<svg
-            className={this.props.className}
+            className={`${styles.lazyImagePlaceholder} ${this.props.className}`}
             xmlns="http://www.w3.org/2000/svg"
             width={minWidth}
             height={minWidth}
             viewBox={`0 0 ${minWidth} ${minWidth}`}
-            style={{ filter: 'blur(5px)' }}
           >
             <rect fill="#ddd" width={minWidth} height={minWidth} />
             <text
