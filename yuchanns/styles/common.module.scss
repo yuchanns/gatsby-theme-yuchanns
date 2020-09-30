@@ -582,6 +582,22 @@
         margin-right: 3px;
       }
     }
+    &-category {
+      margin-right: 16px;
+      margin-left: 0;
+      &-icon {
+        position: relative;
+        top: 1px;
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 4px;
+      }
+      &-text {
+        text-transform: capitalize;
+      }
+    }
   }
   &-title {
     &-container {
@@ -656,6 +672,7 @@
       margin-top: 4px;
       margin-bottom: 4px;
       font-size: 12px;
+      text-transform: capitalize;
       &:hover,
       &:focus {
         background-color: mix(#ffffff, $accentColor, 88.7%);
@@ -773,6 +790,7 @@
       background-color: #fff;
       border: 0;
       border-bottom: 1px solid #eaecef;
+      text-transform: capitalize;
       @media (min-width: 544px) {
         padding-top: 7px;
         padding-bottom: 7px;
