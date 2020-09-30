@@ -1,22 +1,25 @@
 import React from 'react'
 
 class LazyImg extends React.Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.state = {
       isLoad: false,
     }
   }
   componentDidMount() {
-    const avatarImg = new Image()
-    avatarImg.src = this.props.src
-    avatarImg.onload = () => {
-      this.setState({
-        isLoad: true
-      })
-    }
+    setTimeout(() => {
+      const avatarImg = new Image()
+      avatarImg.src = this.props.src
+      avatarImg.onload = () => {
+        this.setState({
+          isLoad: true
+        })
+      }
+    }, 1000)
   }
   render() {
+    const minWidth = Math.min(this.props.width, this.props.height)
     return (
       <React.Fragment>
         {this.state.isLoad ?
@@ -26,26 +29,26 @@ class LazyImg extends React.Component {
             height={this.props.height}
             src={this.props.src}
             alt={this.props.alt} />) :
-          (<div
+          (<svg
             className={this.props.className}
-            style={{
-              width: `${this.props.width}px`,
-              height: `${this.props.height}px`,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}>
-            <div className={`lds-roller`}>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </div>)
+            xmlns="http://www.w3.org/2000/svg"
+            width={minWidth}
+            height={minWidth}
+            viewBox={`0 0 ${minWidth} ${minWidth}`}
+            style={{ filter: 'blur(5px)' }}
+          >
+            <rect fill="#ddd" width={minWidth} height={minWidth} />
+            <text
+              fill="rgba(0,0,0,0.5)"
+              fontFamily="sans-serif"
+              fontSize="30"
+              dy="10.5"
+              fontWeight="bold"
+              x="50%"
+              y="50%"
+              textAnchor="middle"
+            >{this.props.width}×{this.props.height}</text>
+          </svg>)
         }
       </React.Fragment>
     )
