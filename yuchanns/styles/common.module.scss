@@ -828,3 +828,33 @@
     transform: translateY(-16px);
   }
 }
+
+.lazy {
+  &-image {
+    animation: Image-blur 2s;
+    &-placeholder {
+      animation: Image-blur-animation 2s infinite;
+    }
+  }
+}
+
+@keyframes Image-blur {
+  0% {
+    -webkit-filter: blur(5px);
+  }
+  100% {
+    -webkit-filter: blur(0);
+  }
+}
+
+@keyframes Image-blur-animation {
+  0% {
+    -webkit-filter: blur(5px);
+  }
+  50% {
+    -webkit-filter: blur(3px);
+  }
+  100% {
+    -webkit-filter: blur(5px);
+  }
+}
