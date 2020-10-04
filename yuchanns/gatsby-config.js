@@ -30,7 +30,20 @@ module.exports = (options = {}) => {
           component: path.resolve(__dirname, 'components/global-layout'),
         },
       },
-      `gatsby-theme-blog-core`,
+      {
+        resolve: `gatsby-source-filesystem`,
+        options: {
+          path: `content/posts`,
+          name: `content/posts`,
+        },
+      },
+      {
+        resolve: `gatsby-source-filesystem`,
+        options: {
+          path: `content/assets`,
+          name: `content/assets`,
+        },
+      },
       `gatsby-plugin-smoothscroll`,
       `gatsby-plugin-react-helmet`,
       {
@@ -46,6 +59,20 @@ module.exports = (options = {}) => {
         resolve: `gatsby-transformer-remark`,
         options: {
           plugins: [
+            {
+              resolve: `gatsby-remark-images`,
+              options: {
+                maxWidth: 590,
+                linkImagesToOriginal: false,
+              },
+            },
+            `gatsby-remark-images-medium-zoom`,
+            {
+              resolve: `gatsby-remark-highlight-code`,
+              options: {
+                terminal: 'none',
+              }
+            },
             `gatsby-remark-mathjax`,
             `gatsby-remark-flowchart-ver-yuchanns`,
             {
@@ -57,19 +84,6 @@ module.exports = (options = {}) => {
                   },
                 },
               },
-            },
-            {
-              resolve: `gatsby-remark-images`,
-              options: {
-                maxWidth: 590,
-                showCaptions: true,
-              },
-            },
-            {
-              resolve: `gatsby-remark-highlight-code`,
-              options: {
-                terminal: 'none',
-              }
             },
           ],
         },
