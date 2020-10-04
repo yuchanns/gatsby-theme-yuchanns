@@ -30,7 +30,20 @@ module.exports = (options = {}) => {
           component: path.resolve(__dirname, 'components/global-layout'),
         },
       },
-      `gatsby-theme-blog-core`,
+      {
+        resolve: `gatsby-source-filesystem`,
+        options: {
+          path: `content/posts`,
+          name: `content/posts`,
+        },
+      },
+      {
+        resolve: `gatsby-source-filesystem`,
+        options: {
+          path: `content/assets`,
+          name: `content/assets`,
+        },
+      },
       `gatsby-plugin-smoothscroll`,
       `gatsby-plugin-react-helmet`,
       {
