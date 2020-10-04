@@ -59,6 +59,20 @@ module.exports = (options = {}) => {
         resolve: `gatsby-transformer-remark`,
         options: {
           plugins: [
+            {
+              resolve: `gatsby-remark-images`,
+              options: {
+                maxWidth: 590,
+                linkImagesToOriginal: false,
+              },
+            },
+            `gatsby-remark-images-medium-zoom`,
+            {
+              resolve: `gatsby-remark-highlight-code`,
+              options: {
+                terminal: 'none',
+              }
+            },
             `gatsby-remark-mathjax`,
             `gatsby-remark-flowchart-ver-yuchanns`,
             {
@@ -70,19 +84,6 @@ module.exports = (options = {}) => {
                   },
                 },
               },
-            },
-            {
-              resolve: `gatsby-remark-images`,
-              options: {
-                maxWidth: 590,
-                showCaptions: true,
-              },
-            },
-            {
-              resolve: `gatsby-remark-highlight-code`,
-              options: {
-                terminal: 'none',
-              }
             },
           ],
         },
