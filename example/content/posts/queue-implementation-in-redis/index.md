@@ -39,7 +39,7 @@ tags:
 127.0.0.1:6379> LPUSH queue msg
 ```
 下图展示了原生redis下的整个**生产-消费**流程：
-![](/images/redis-queue.png)
+![](./redis-queue.png)
 
 ## 队列、消息的设计思路
 接下来我们使用Go语言来编写实现队列的代码。
