@@ -195,10 +195,10 @@ docker-compose rm -f
 
 一键命令启动docker容器，使用`docker ps -s`来查看容器信息，可以看到，整个lnmp环境大小才600MB左右，其中大部分是mysql的体积(占据了400+)。
 
-![](/images/lnmp-size.png)
+![](./lnmp-size.png)
 
 绝妙的地方就是，我写完了这一系列Dockerfile，将其上传到我的github仓库中，那么下次我可以在任意安装了Docker的环境中轻松快速构建标准化的我熟悉的开发环境。
 
-![](/images/docker-lnmp-dev.png)
+![](./docker-lnmp-dev.png)
 
 而每当我写一些小demo进行演示时，想要让别人立即获得我展示的效果。那么我也可以将其配置为一个`docker-compose.yml`文件，随着demo源代码上传到仓库中。这样，别人克隆了源码之后，可以准确地复现演示，避免了各种环境不同造成的困惑尴尬局面！

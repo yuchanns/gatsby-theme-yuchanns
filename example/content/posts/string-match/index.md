@@ -12,7 +12,7 @@ tags:
   - "Finite Automata"
   - "Knuth-Morris-Pratt"
 ---
-![](/images/huixiangdou.jpg)
+![](./huixiangdou.jpg)
 
 最近在看golang基础，在字符串操作的部分，包含了关于判断一个字符串是否包含在另一个字符串中的标准方法，好奇之下研究了源码是怎么实现的，于是有了这篇文章。
 

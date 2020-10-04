@@ -35,7 +35,7 @@ tags:
 
 答案是有的，使用**NFS**(~~极品飞车Need For Speed~~网络文件系统Network File System)。
 
-![](/images/need4speed.jpeg)
+![](./need4speed.jpeg)
 
 ## NFS
 这是一种通过网络实现了标准接口的文件系统，使得Linux主机可以透过网络将局域网其他主机挂载本地，如同访问本地文件那样轻松访问其他主机共享路径。

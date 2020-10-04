@@ -124,7 +124,7 @@ k proxy --address='0.0.0.0' --disable-filter=true
 ```
 这时候将域名替换成NUC的局域网ip和对应的端口就可以访问了，比如我的NUC局域网ip是**192.168.199.140**，那么访问`http://192.168.199.140:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/`即可看到dashboard图形化界面。
 
-![](/images/k8s-dashboard.png)
+![](./k8s-dashboard.png)
 
 ### 部署一个简单的镜像
 通过镜像部署一个简单的echoServer，然后使用ssh设置转发，方便局域网访问。
@@ -163,7 +163,7 @@ ssh -L 0.0.0.0:9000:172.17.0.3:31869 192.168.199.140
 ```
 这时候我们通过浏览器访问NUC的ip:9000就可以访问到这个服务了。
 
-![](/images/k8s-echoServer.png)
+![](./k8s-echoServer.png)
 
 ### 删除清理
 ```bash

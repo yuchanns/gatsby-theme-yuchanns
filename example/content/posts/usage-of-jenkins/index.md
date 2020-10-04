@@ -7,7 +7,7 @@ tags:
   - "学习使用"
   - "devops"
 ---
-![](/images/jenkins2.png)
+![](./jenkins2.png)
 
 ## 前言
 [Jenkins](https://www.jenkins.io)是一个用Java编写的持续集成开源工具，与之类似的还有[TravisCI](https://travis-ci.org/)和[CircleCI](https://circleci.com/)以及最近推出的[GithubActions](https://github.com/features/actions)等工具。笔者以前使用得较多的是Circle——无论是Travis还是Circle，两者都是github上十分流行于开源者之间的选择。
@@ -120,7 +120,7 @@ Jenkins的流水线语法很简单，而且官方软件也提供了语法生成�
 ### 一次构建的尝试
 测试目标为本博客的皮肤[yuchanns/vuepress-theme-hermit](https://github.com/yuchanns/vuepress-theme-hermit)的构建。
 
-![](/images/jenkins02.png)
+![](./jenkins02.png)
 
 首先我们在Jenkins管理首页左侧的[凭据->系统->全局凭据->添加凭据]中添加凭据，输入自己的github账号和密码。
 
@@ -146,7 +146,7 @@ pipeline {
 }
 ```
 点击立即构建，稍等一段时间构建就完成了。
-![](/images/jenkins03.png)
+![](./jenkins03.png)
 ### 结语
 Jenkins还有很多复杂用法，比如仓库推送触发机制，单元测试机制等等。本文目前只是做了一个简单的介绍。
 

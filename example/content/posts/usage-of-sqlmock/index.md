@@ -116,7 +116,7 @@ INSERT INTO `t_exchange_info` (`deparment_id`, `times`, `number`, `lastmodified`
 
 最终我们发现真正问题在于在[github.com/astaxie/beego@v1.12.2/orm/db.go](https://github.com/astaxie/beego/blob/f6519b29a846bdf59a2b86baa011c242f78387d5/orm/db.go#L91)第91行这里，在结构体字段的tag中包含有auto属性时，会被跳过，这就是造成过滤的原因。
 
-![](/images/beego-orm.png)
+![](./beego-orm.png)
 
 ## 结论
 经过咨询得知，那位大兄弟在建立数据库交互所使用的数据结构体时，习惯在主键上打一个`auto`tag，认为这样表示主键自增的意思。

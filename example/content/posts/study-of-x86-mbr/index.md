@@ -53,7 +53,7 @@ ROM-BIOS执行完本身的指令后，将硬盘**主引导扇区**内容加载�
 * 机器码阅读工具：使用GitHub上开源的[ridiculousfish/HexFiend](https://github.com/ridiculousfish/HexFiend)。
 * IDE：使用开源版JetBrains系列编辑器及插件[NASM Assembly Language](https://plugins.jetbrains.com/plugin/index?xmlId=com.nasmlanguage)。
 
-![](/images/goland.png)
+![](./goland.png)
 
 ```bash
 # 编译源文件到二进制

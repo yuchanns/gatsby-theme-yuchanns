@@ -12,7 +12,7 @@ tags:
 ---
 最近赶项目进度，几乎没什么精力学习研究了，但是就算加班也不能阻止我发文！
 
-![](/images/huixiangdou2.jpg)
+![](./huixiangdou2.jpg)
 
 > 前言
 >
