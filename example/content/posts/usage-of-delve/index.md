@@ -11,7 +11,7 @@ tags:
 
 如果读者有使用Goland进行debug的经验，应该很熟悉如下场景——
 
-> 当我们进行debug的时候，只需要在代码对应的地方打上断点，然后右键`main`或者`Test*`开头函数旁边的绿色三角箭头标记，选择debug，IDE就会自动执行到断点处并暂停程序的运行。接着我们在IDE下方弹出的Debug窗口里，点击黄色的箭头(`Step Info`)就可以进行**单步调试**；同时我们还可以在Vriables框里看到该函数中被分配的变量类型及其内容等信息。
+> 当我们进行debug的时候，只需要在代码对应的地方打上断点，然后右键`main`或者`Test*`开头函数旁边的绿色三角箭头标记，选择debug，IDE就会自动执行到断点处并暂停程序的运行。接着我们在IDE下方弹出的Debug窗口里，点击黄色的箭头(`Step Info`)就可以进行**单步调试**；同时我们还可以在Vriables框里看到该函数中被分配的变量类型及其内容等信息；在frame窗口里可以切换不同的goroutine并查看相应的栈帧，以及选择某一帧查看当时的信息。
 
 ![](./goland-debug.png)
 
@@ -207,7 +207,7 @@ Showing /Users/yuchanns/Coding/golang/gobyexample/dlv/main.go:8 (PC: 0x10c281f)
 ### break [name] \<linespec\>
 进行断点，可以用`b`代替。给定断点所在的`文件名:行数`（一样可以用函数名代替，但是指定行数更灵活）。
 
-例如我要把断点打在`main.main`函数的`for`关键字处。我们可以先用`ls main.main`来查看源码，然后得知文件名以及`for`关键字行数为`gobyexample/dlv/main.go:22`。
+例如笔者要把断点打在`main.main`函数的`for`关键字处。我们可以先用`ls main.main`来查看源码，然后得知文件名以及`for`关键字行数为`gobyexample/dlv/main.go:22`。
 
 于是使用`b gobyexample/dlv/main.go:22`的方式打上一个断点。
 ```bash
@@ -355,6 +355,81 @@ Breakpoint unrecovered-panic at 0x10339e0 for runtime.fatalpanic() /usr/local/go
 	print runtime.curg._panic.arg
 Breakpoint 1 at 0x10c296a for main.main() ./dlv/main.go:22 (1)
 ```
+### stack和frame
+前面的命令中曾提到frame，可能有的读者对此有疑问，现在进行说明。
+
+我们对源码进行调试时，偶尔会产生需要回顾之前运行过的代码片段的信息需求，就好比上面的斐波那契递归，在调试下已经递归了20次，然后需要查看第18次的信息，这时候就可以通过查阅frame来满足需求。
+
+frame实际上是栈帧，即记录了每一个函数调用过程的信息帧。可以用`stack`或者简称`bt`来获取栈上的帧信息。
+
+每一帧都记录了执行的函数对应的文件地址，可以据此判断哪一帧才是我们需要的。
+
+然后使用`frame 帧编号`的方式进入该帧，结合上面的命令查看该帧中的相应信息。
+```bash
+(dlv) bt
+ 0  0x00000000010c2854 in main.FibIter
+    at ./dlv/main.go:13
+ 1  0x00000000010c287e in main.FibIter
+    at ./dlv/main.go:13
+ 2  0x00000000010c287e in main.FibIter
+    at ./dlv/main.go:13
+ 3  0x00000000010c287e in main.FibIter
+    at ./dlv/main.go:13
+ 4  0x00000000010c287e in main.FibIter
+    at ./dlv/main.go:13
+ 5  0x00000000010c287e in main.FibIter
+    at ./dlv/main.go:13
+ 6  0x00000000010c287e in main.FibIter
+    at ./dlv/main.go:13
+ 7  0x00000000010c287e in main.FibIter
+    at ./dlv/main.go:13
+ 8  0x00000000010c287e in main.FibIter
+    at ./dlv/main.go:13
+ 9  0x00000000010c287e in main.FibIter
+    at ./dlv/main.go:13
+10  0x00000000010c287e in main.FibIter
+    at ./dlv/main.go:13
+11  0x00000000010c287e in main.FibIter
+    at ./dlv/main.go:13
+12  0x00000000010c287e in main.FibIter
+    at ./dlv/main.go:13
+13  0x00000000010c287e in main.FibIter
+    at ./dlv/main.go:13
+14  0x00000000010c287e in main.FibIter
+    at ./dlv/main.go:13
+15  0x00000000010c287e in main.FibIter
+    at ./dlv/main.go:13
+16  0x00000000010c287e in main.FibIter
+    at ./dlv/main.go:13
+17  0x00000000010c287e in main.FibIter
+    at ./dlv/main.go:13
+18  0x00000000010c28f6 in main.Fib
+    at ./dlv/main.go:17
+19  0x00000000010c2a4a in main.main.func1
+    at ./dlv/main.go:25
+20  0x0000000001063a91 in runtime.goexit
+    at /usr/local/go/src/runtime/asm_amd64.s:1373
+(dlv) frame 1
+> main.FibIter() ./dlv/main.go:13 (PC: 0x10c2854)
+Frame 1: ./dlv/main.go:13 (PC: 10c287e)
+     8:	func FibIter(a, b, n int) int {
+     9:		if n == 0 {
+    10:			return b
+    11:		}
+    12:
+=>  13:		return FibIter(a+b, a, n-1)
+    14:	}
+    15:
+    16:	func Fib(n int) int {
+    17:		return FibIter(1, 0, n)
+    18:	}
+(dlv) args
+a = 1597
+b = 987
+n = 84
+~r3 = 0
+(dlv)
+```
 ### restart和rebuild
 `restart`或简写`r`命令可以重新起一个进程来进行debug，从头进行，而此次会话设置的断点等信息依旧会保存下来，不需要重新设置断点。
 
@@ -384,4 +459,133 @@ Breakpoint 2 set at 0x10c281f for main.FibIter() ./dlv/main.go:8
     11:		}
     12:
     13:		return FibIter(a+b, a, n-1)
+```
+## 其他debug方式
+前两节，笔者都是围绕`dlv debug`命令进行描述。有时候我们因为环境配置等问题，无法直接编译并启动整个二进制文件进行debug。
+
+通常，在测试局部功能时，都是通过编写测试用例进行，dlv自然也支持这种方法。
+
+在此之前，我们也可以执行`dlv help`看看除了`debug`外都有哪些其他命令：
+```bash
+❯ dlv help
+Delve is a source level debugger for Go programs.
+
+Delve enables you to interact with your program by controlling the execution of the process,
+evaluating variables, and providing information of thread / goroutine state, CPU register state and more.
+
+The goal of this tool is to provide a simple yet powerful interface for debugging Go programs.
+
+Pass flags to the program you are debugging using `--`, for example:
+
+`dlv exec ./hello -- server --config conf/config.toml`
+
+Usage:
+  dlv [command]
+
+Available Commands:
+  attach      Attach to running process and begin debugging.
+  connect     Connect to a headless debug server.
+  core        Examine a core dump.
+  dap         [EXPERIMENTAL] Starts a TCP server communicating via Debug Adaptor Protocol (DAP).
+  debug       Compile and begin debugging main package in current directory, or the package specified.
+  exec        Execute a precompiled binary, and begin a debug session.
+  help        Help about any command
+  run         Deprecated command. Use 'debug' instead.
+  test        Compile test binary and begin debugging program.
+  trace       Compile and begin tracing program.
+  version     Prints version.
+
+Flags:
+      --accept-multiclient   Allows a headless server to accept multiple client connections.
+      --api-version int      Selects API version when headless. New clients should use v2. Can be reset via RPCServer.SetApiVersion. See Documentation/api/json-rpc/README.md. (default 1)
+      --backend string       Backend selection (see 'dlv help backend'). (default "default")
+      --build-flags string   Build flags, to be passed to the compiler.
+      --check-go-version     Checks that the version of Go in use is compatible with Delve. (default true)
+      --headless             Run debug server only, in headless mode.
+  -h, --help                 help for dlv
+      --init string          Init file, executed by the terminal client.
+  -l, --listen string        Debugging server listen address. (default "127.0.0.1:0")
+      --log                  Enable debugging server logging.
+      --log-dest string      Writes logs to the specified file or file descriptor (see 'dlv help log').
+      --log-output string    Comma separated list of components that should produce debug output (see 'dlv help log')
+      --only-same-user       Only connections from the same user that started this instance of Delve are allowed to connect. (default true)
+      --wd string            Working directory for running the program. (default ".")
+
+Additional help topics:
+  dlv backend Help about the --backend flag.
+  dlv log     Help about logging flags.
+
+Use "dlv [command] --help" for more information about a command.
+```
+`attach`可以使用dlv跟踪一个正在运行的程序。
+
+`core`则可以对一个golang的`core dump`文件进行回溯。
+
+> 注：什么是`core dump`文件？当一份代码编译后运行一段时间会发生崩溃，但是又很难定位错误时，较原始的办法是不停地在一些关键代码上报日志；而一个更方便的方法则是通过设置环境变量`GOTRACEBACK=crash`，生成一份进程运行直到崩溃时详细信息的快照，然后对这个快照进行回溯。
+
+对测试用例所在的目录执行`dlv test github.com/yuchanns/gobyexample/dlv`，然后对测试函数进行断点，其余操作和前两节一致：
+```go
+// gobyexample/dlv/pkg_test.go
+package main
+
+import (
+	"testing"
+)
+
+func TestFib(t *testing.T) {
+	r := Fib(5)
+	if r != 5 {
+		t.Error("Fib(5) is not equal to 5")
+	}
+}
+```
+```bash
+❯ dlv test github.com/yuchanns/gobyexample/dlv
+Type 'help' for list of commands.
+(dlv) b TestFib
+Breakpoint 1 set at 0x114ea03 for github.com/yuchanns/gobyexample/dlv.TestFib() ./dlv/pkg_test.go:7
+(dlv) c
+> github.com/yuchanns/gobyexample/dlv.TestFib() ./dlv/pkg_test.go:7 (hits goroutine(6):1 total:1) (PC: 0x114ea03)
+     2:
+     3:	import (
+     4:		"testing"
+     5:	)
+     6:
+=>   7:	func TestFib(t *testing.T) {
+     8:		r := Fib(5)
+     9:		if r != 5 {
+    10:			t.Error("Fib(5) is not equal to 5")
+    11:		}
+    12:	}
+(dlv) args
+t = (*testing.T)(0xc00011c120)
+(dlv) s
+> github.com/yuchanns/gobyexample/dlv.TestFib() ./dlv/pkg_test.go:8 (PC: 0x114ea11)
+     3:	import (
+     4:		"testing"
+     5:	)
+     6:
+     7:	func TestFib(t *testing.T) {
+=>   8:		r := Fib(5)
+     9:		if r != 5 {
+    10:			t.Error("Fib(5) is not equal to 5")
+    11:		}
+    12:	}
+(dlv) s
+> github.com/yuchanns/gobyexample/dlv.Fib() ./dlv/main.go:16 (PC: 0x114e98f)
+    11:		}
+    12:
+    13:		return FibIter(a+b, a, n-1)
+    14:	}
+    15:
+=>  16:	func Fib(n int) int {
+    17:		return FibIter(1, 0, n)
+    18:	}
+    19:
+    20:	func main() {
+    21:		wg := sync.WaitGroup{}
+(dlv) c
+PASS
+Process 9612 has exited with status 0
+(dlv)
 ```
