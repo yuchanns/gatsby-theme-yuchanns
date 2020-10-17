@@ -6,6 +6,7 @@ category: "golang"
 tags:
   - "protobuf"
   - "protoc"
+  - "grpc"
 ---
 protobuf是谷歌开发的一款跨平台跨语言强扩展性的用于序列化数据的协议，就像人们常用的xml、json一样。它主要由C++编写，用户按照语法可以批量生成对应语言的代码模板，用于诸如微服务rpc交换数据之类的通信。
 
