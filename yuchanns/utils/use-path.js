@@ -10,6 +10,7 @@ module.exports = async graphql => {
               description
               tags
               title
+              wip
             }
             timeToRead
             fileAbsolutePath

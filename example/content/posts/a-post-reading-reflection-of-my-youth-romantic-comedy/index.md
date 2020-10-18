@@ -3,6 +3,7 @@ title: 《春物》观后感
 date: 2020-09-18T10:25:30.555Z
 description: "《我的青春恋爱物语果然有问题。》观后感"
 category: "literature"
+wip: true
 tags:
   - "My Youth Romantic Comedy Is Wrong, As I Expected"
   - "やはり俺の青春ラブコメはまちがっている。"

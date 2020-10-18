@@ -14,6 +14,7 @@ export const usePosts = () => {
               description
               tags
               title
+              wip
             }
             timeToRead
             fileAbsolutePath
