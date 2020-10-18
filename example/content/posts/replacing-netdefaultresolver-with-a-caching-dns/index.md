@@ -3,6 +3,7 @@ title: Replacing net.DefaultResolver with a caching DNS over TLS/HTTPS resolver
 date: 2020-05-24T15:46:03.000Z
 description: "Replacing net.DefaultResolver with a caching DNS over TLS/HTTPS resolver"
 category: "golang"
+wip: true
 tags:
   - "dns"
   - "net/http"

@@ -43,7 +43,7 @@ const Post = ({ post, detail=false }) => {
           <div className={styles.postsTitleContainer}>
             <div className={styles.postsTitleBlock}>
               <div className={styles.postsTitleBox}>
-                <h3 className={styles.postsTitleText}>{post.frontmatter.title}</h3>
+                <h3 className={styles.postsTitleText}>{(post.frontmatter.hasOwnProperty('wip') && post.frontmatter.wip === true) ? `[WIP]` : ``}{post.frontmatter.title}</h3>
               </div>
             </div>
           </div>
