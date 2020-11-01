@@ -1,7 +1,7 @@
 ---
-title: go项目怎么分布
+title: go项目怎么布局
 date: 2020-10-13T15:39:06.346Z
-description: "go项目怎么分布"
+description: "go项目怎么布局"
 category: "golang"
 wip: true
 tags:
