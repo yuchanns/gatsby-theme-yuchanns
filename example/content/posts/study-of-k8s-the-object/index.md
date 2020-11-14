@@ -52,7 +52,7 @@ spec:
 如同级联选择那样，前两个字段是单向从下至上依赖的：先确定`apiVersion`，才能确定有哪些`kind`。而`metadata`则包含有三个属性：`name`字符串、UID和可选的`namespace`。
 
 下面，本文将列出`apiVersion`的候选项，以及相应的子选项`kind`候选项，作为使用参考。
-### apiVersion表单数据
+### apiVersion清单
 `apiVersion`由`Group`和`Version`组成，比如创建要创建一个`kind`为**Deployment**的对象，所使用的`apiVersion`为**apps/v1**。其中`Group`是**apps**，而`Version`则是**v1**，它们通过`/`组成了`apiVersion`。
 
 下表总结了API组及其版本，阅读起来颇为枯燥，但是需要用到的时候作为参考就很有用。
@@ -86,7 +86,7 @@ spec:
 
 比较特别地，当`Group`为**core**时，其`apiVersion`直接写作`v1`。
 
-### 部分kind表单数据
+### 部分kind清单
 虽然上文中有如此多的`apiVersion`，其对应的`kind`更是不计其数，但对于初学者来说，常用的`kind`寥寥可数，因此本文仅列出可能常用的几种`kind`和其对应的`apiVersion`。更详细的数据全部可以在[`Kubernetes API`](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/)查询。
 
 |kind|apiVersion|备注|
@@ -116,7 +116,22 @@ spec:
 这一节，将会给出上文列出的常用部分kind对应的spec。
 ### spec格式
 (未完成)
-### 实践1-解读nginx对象
-在文章开头给出了一份`nginx-deployment.yml`。在了解k8s对象的规范后，我们已经可以对这一内容进行解读。(未完成)
-### 实践2-创建jenkins对象
-经过对实例的解读，我们对如何描述k8s对象更胸有成竹了一些。现在，可以尝试给自己布置一个任务：描述并创建jenkins对象。(未完成)
+## 实践内容
+### 解读nginx对象
+在文章开头给出了一份`nginx-deployment.yml`。在了解k8s对象的规范后，我们已经可以对这一内容进行解读。
+
+(未完成)
+### 创建jenkins对象
+经过对实例的解读，我们对如何描述k8s对象更胸有成竹了一些。现在，可以尝试给自己布置一个任务：描述并创建jenkins对象。
+
+(未完成)
+### Prometheus以及权限分配
+一个复杂的集群系统，对其进行有效的监控是非常必要的事项。我们可以通过部署一个Prometheus来对集群、对Deployment进行监控，结合Grafana图表，以了解系统的运行状态。
+
+(未完成)
+### Ingress控制器与集群外部访问手段
+或许读者们在本地使用minikube描述一系列k8s对象创建系统后，感觉一切良好，但总觉得有什么地方被忽略了。没错，我们在本地访问集群如鱼得水，而一旦从其他机器访问就会发现网络无法连通——这是因为集群在配置中限制了对本地访问。
+
+诚然我们可以通过ssh转发、或者修改配置允许外来访问，但安全而可靠的方法是通过Ingress控制器来实现对外部访问路由的请求分发。这一样是通过第三方ingress插件结合k8s对象描述来实现的。
+
+考虑到篇幅长度的影响，这一内容笔者将会在下一篇文章中进行讲解。敬请期待！
