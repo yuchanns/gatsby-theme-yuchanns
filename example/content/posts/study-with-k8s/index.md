@@ -2,7 +2,7 @@
 title: k8s学习笔记
 date: 2020-06-17T15:12:00.000Z
 description: "k8s学习笔记"
-category: "golang"
+category: "kubernetes"
 tags:
   - "k8s"
   - "docker"
