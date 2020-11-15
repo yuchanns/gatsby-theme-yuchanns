@@ -102,19 +102,60 @@ spec:
 |Role|rbac.authorization.k8s.io/v1||
 |RoleBinding|rbac.authorization.k8s.io/v1||
 |Container|v1|只在Pod上下文中创建使用|
-|Pod|v1|推荐通过Controller(例如Deployment)创建，而不是直接创建|
 |Service|v1||
 |ConfigMap|v1||
 |Volume|v1||
 |PersistentVolumeClaim|v1||
 |NetworkPolicy|networking.k8s.io/v1||
 |ObjectMeta|meta/v1|对应各种Kind的k8s对象中的meta字段|
+|LabelSelector|meta/v1|对应各种Kind的k8s对象中的spec.selector字段|
+|PodTemplateSpec|v1|Pod模板，常用在各种Kind的k8s对象的spec.tempalte字段|
+|PodSpec|v1|Pod定义，在模板中使用|
 
 除了上述三个必要字段之外，在确定了`kind`之后，还需要使用`spec`字段来具体描述k8s对象的精确属性。这些属性在每个`kind`中各不相同，需要区分看待。
 
 ## kind及其对应的spec
 这一节，将会给出上文列出的常用部分kind对应的spec。
-### spec格式
+### 被频繁使用的kind spec
+在spec中，有一些字段使用频率很高，这里优先提出来，后续不再赘述。
+
+* `selector` - 标签选择器，`kind`为**LabelSelector**，在对一组资源进行查询时作为标签被使用。匹配结果使用`&&`运算、空选择器可以匹配任意对象，null选择器人以对象不匹配。它的结构如下：
+  ```yaml
+  selector:
+      matchExpressions: # 匹配表达式，本身是一个数组，成员为对象，包含key, operator和values字段
+        - key: app # 选择器所作用的标签
+          operator: In # 标签与下面的值的关系，有In, NotIn, Exists和DoesNotExist
+          values: # 这是一个数组，包含一系列标签的值。该示例表示选择器作用在值包含有nginx, proxy这些值之一的app标签
+            - nginx
+            - proxy
+      matchLabels: # 键值对对象，一个键值对等同于上面的matchExpressions的一个元素
+        app: nginx # 这是一个示例，选择器作用在值为nginx的app标签时生效
+  ```
+* `template` - 模板，`kind`通常为**PodTemplateSpec**，集群将会根据此模板创建Pod。它的结构如下：
+  ```yaml
+  template:
+      metadata: # 一个标准的kind为ObjectMeta的对象
+        annotations: # 注解字段，是一个对象。注解键值对不用于标签选择，而是用于部署时作为元数据获取使用
+          # 参考https://kubernetes.io/zh/docs/concepts/overview/working-with-objects/annotations/
+          imageregistry： "https://hub.docker.com/" # 例如声明使用的镜像库为dockerhub
+        clusterName: minikube # 声明该对象所属的集群，用于区分不同集群中存在的name和namespace相同的情况
+        creationTimestamp:
+        deletionGracePeriodSeconds:
+        deletionTimestamp:
+        finalizers:
+        generateName:
+        generation:
+        labels:
+        managedFields:
+        name:
+        namespace:
+        ownerReferences:
+        resourceVersion:
+        selfLink:
+        uid:
+      spec: # 用于定义pod的行为，kind为PodSpec
+  ```
+
 (未完成)
 ## 实践内容
 ### 解读nginx对象
