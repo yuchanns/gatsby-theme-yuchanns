@@ -140,19 +140,22 @@ spec:
           imageregistry： "https://hub.docker.com/" # 例如声明使用的镜像库为dockerhub
         clusterName: minikube # 声明该对象所属的集群，用于区分不同集群中存在的name和namespace相同的情况
         creationTimestamp: # 一个时间戳，表示创建此对象时的服务器时间，只读属性，由系统设置
-        deletionGracePeriodSeconds:
-        deletionTimestamp:
-        finalizers:
-        generateName:
-        generation:
-        labels:
-        managedFields:
-        name:
-        namespace:
-        ownerReferences:
-        resourceVersion:
-        selfLink:
-        uid:
+        deletionGracePeriodSeconds: # 优雅终止容忍的时间长度，设置了deletionTimestamp时才会生效
+        deletionTimestamp: # 客户端通过发出删除请求经由系统设置
+        finalizers: # 一个[]string数组，作为前置删除钩子，记录需要被删除的关联依赖
+          # 比如说为当前k8s对象创建了一个storage，删除本对象前想要同步删除storage，可以在这里设置拦截器
+          # 可以自定义实现拦截器，参考https://book.kubebuilder.io/reference/using-finalizers.html#using-finalizers
+        generateName: # 可选前缀，字符串，没有提供name时会被使用，搭配唯一后缀生成一个唯一名称
+        generation: # 由系统生成的表示所需状态的特定生成的序列号，只读
+        labels: # 键值对map，用于组织和分类k8s对象使用，在metadata中最常使用的字段
+          app: nginx
+        managedFields: # 用户无须了解的字段，系统内部版本管理使用
+        name: # 资源名称，在同一个命名空间中必须唯一，无法被更新
+        namespace: default # 字符串所属的命名空间，为空则默认为default，无法被更新
+        ownerReferences: # 一个列表，包含引用了此对象的所有对象，当该列表中的所有对象被删除时，此对象就会被回收
+        resourceVersion: # 表示对象的内部版本，可以给客户端用来确定对象是否变更
+        selfLink: # 在1.21版本将会被移除
+        uid: # 对象唯一值，由系统填充，不可更改
       spec: # 用于定义pod的行为，kind为PodSpec
   ```
 
