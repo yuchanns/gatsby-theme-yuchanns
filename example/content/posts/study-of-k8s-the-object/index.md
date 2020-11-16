@@ -139,7 +139,7 @@ spec:
           # 参考https://kubernetes.io/zh/docs/concepts/overview/working-with-objects/annotations/
           imageregistry： "https://hub.docker.com/" # 例如声明使用的镜像库为dockerhub
         clusterName: minikube # 声明该对象所属的集群，用于区分不同集群中存在的name和namespace相同的情况
-        creationTimestamp:
+        creationTimestamp: # 一个时间戳，表示创建此对象时的服务器时间，只读属性，由系统设置
         deletionGracePeriodSeconds:
         deletionTimestamp:
         finalizers:
