@@ -116,8 +116,8 @@ spec:
 
 ## kind及其对应的spec
 这一节，将会给出上文列出的常用部分kind对应的spec。
-### 被频繁使用的kind spec
-在spec中，有一些字段使用频率很高，这里优先提出来，后续不再赘述。
+### selector和template
+spec有两个字段，分别是`selector`和`template`，这里先列出所有的字段示意，然后再给出常用的字段：
 
 * `selector` - 标签选择器，`kind`为**LabelSelector**，在对一组资源进行查询时作为标签被使用。匹配结果使用`&&`运算、空选择器可以匹配任意对象，null选择器人以对象不匹配。它的结构如下：
   ```yaml
@@ -131,7 +131,7 @@ spec:
       matchLabels: # 键值对对象，一个键值对等同于上面的matchExpressions的一个元素
         app: nginx # 这是一个示例，选择器作用在值为nginx的app标签时生效
   ```
-* `template` - 模板，`kind`通常为**PodTemplateSpec**，集群将会根据此模板创建Pod。它的结构如下：
+* `template` - 模板，它的结构如下：
   ```yaml
   template:
       metadata: # 一个标准的kind为ObjectMeta的对象
@@ -156,8 +156,55 @@ spec:
         resourceVersion: # 表示对象的内部版本，可以给客户端用来确定对象是否变更
         selfLink: # 在1.21版本将会被移除
         uid: # 对象唯一值，由系统填充，不可更改
-      spec: # 用于定义pod的行为，kind为PodSpec
+      spec: # 用于定义kind的行为，为对应kind的spec，例如PodSpec、NamespaceSpec等等
   ```
+
+`selector`常用的字段是`matchLabels`，`template.metadata`常用的字段是`annotation`、`labels`、`name`。
+
+### kind对应的spec
+我们很容易注意到，`spec`下还有一个`spec`，是`spec.template.spec`。这个`spec`的内容根据对应的`kind`有所不同，例如`kind`为**Deployment**则有**PodSpec**，对应**Namespace**则有**NamespaceSpec**，下面列出常用的`spec`：
+> Kind: **Deployment**
+
+```yaml
+spec:
+    activeDeadlineSeconds: 10 # pod存活时间，无法和ReplicaSet一起使用，也无法在Deployment中用。一般不会使用
+    affinity: # pod调度约束，不详细展开，可以参考https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#affinity-v1-core
+    automountServiceAccountToken: false # 指示要不要自动载入某个服务的token
+    containers: # 一个数组，数组成员为Container对象。本小节里的重点，用于配置一个pod中的多个容器
+      # 下面同步给出一个Container对象具有的属性
+      - args: # 入口参数，传递给给镜像入口命令，[]string类型
+        command: # 镜像入口命令，容器启动时会运行的命令。也是[]string类型。
+        env: # 容器的环境变量，是一个数组，每个成员为EnvVar对象，不可被更新
+          - name: GOPROXY # 环境变量名
+          - value: https://goproxy.cn # 环境变量值
+          - valueFrom: # 环境变量资源，是一个对象，具体参考https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#envvarsource-v1-core
+        envFrom: # 同上env.valueFrom
+        image: golang:1.15.2 # docker镜像名
+        imagePullPolicy: IfNotPresent # 镜像拉取策略：包含Always, Never, IfNotPresent。如果镜像指定版本为latest则默认为always，否则默认为IfNotPresent
+        lifecycle: # 在pod的生命周期中应该执行的动作，为一个Lifecycle对象。
+          postStart: # Handler类，参考https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#handler-v1-core
+          preStop: # 同上可参考
+        livenessProbe: # 活性探针，用来确保容器存活性，是一个Probe对象，具体可以阅读https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#probe-v1-core
+        name: # 容器名字，用于识别成DNS_LABEL，无法被更新，必须独一一刀无二
+        ports: # 对服务暴露的端口号,是一串数组，成员为ContainerPort
+         - containerPort: 80 # 容器暴露的端口号
+           hostIP: # 绑定到该端口的宿主ip
+           hostPort: # 容器暴露的端口映射到宿主的端口
+           name: # 端口名，在Pod中唯一，可被Services引用，必须为IANA_SVC_NAME(iana的服务名风格，iana是一个机构，查阅https://www.iana.org/)
+           protocol: TCP # 使用的通信协议，必须为TCP、UDP或者SCTP，默认为TCP
+        readinessProbe:
+        resources:
+        securityContext:
+        startupProbe:
+        stdin:
+        stdinOnce:
+        terminationMessagePath:
+        terminationMessagePolicy:
+        tty:
+        volumeDevices:
+        volumeMounts:
+        workingDir:
+```
 
 (未完成)
 ## 实践内容
