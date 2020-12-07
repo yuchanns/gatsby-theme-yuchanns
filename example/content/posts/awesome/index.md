@@ -31,5 +31,5 @@ tags:
 ## 视频资源
 * [Go夜读](https://space.bilibili.com/326749661/)
 
-## :eyes: 其他
+## 其他
 * [FreeSSL](https://freessl.cn/)
