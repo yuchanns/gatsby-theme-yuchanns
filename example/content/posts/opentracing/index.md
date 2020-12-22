@@ -37,7 +37,7 @@ tags:
 ## 落地实践
 ![](./opentracing.png)
 
-* 服务端集成上报中间件
+* 原子服务集成上报中间件
 * 部署Jaeger服务端，包括Jaeger Agent和Jaegger Collector
 * Agent采用udp协议与客户端(原子服务)通信，无状态，消耗低，适用每个请求都上报的场景。客户端发送就完事，不关心Agent是否收到
 * Agent收集一定量链路日志后批量上报给Collector，用的是http协议，然后Collector再写入到数据库里
@@ -48,7 +48,7 @@ tags:
 ## go服务端gin中间件使用方法
 > 代码库地址：[yuchanns/bullets](https://github.com/yuchanns/bullets)
 
-```sh
+```bash
 go get github.com/yuchanns/bullets@v0.0.12
 ```
 
@@ -64,21 +64,21 @@ func main() {
     operationPrefix := []byte("api-request-")
     opentracerCloseFunc, opentracerMiddleware, err := middlewares.BuildOpenTracerInterceptor(serviceName, agentAddr, operationPrefix))
     if err != nil {
-		common.Logger.Error(context.Background(), err)
-	} else {
-		g.Use(opentracerMiddleware)
-	}
+        common.Logger.Error(context.Background(), err)
+    } else {
+        g.Use(opentracerMiddleware)
+    }
 }
 ```
 * 自定义打tag
 ```go
 func CustomTag(ctx *gin.Context, err error, data interface{}) {
-	if cspan, ok := ctx.Get("tracing-context"); ok {
-		if span, ok := cspan.(opentracing.Span); ok {
-			span.SetTag("error", true)
-			span.LogFields(log.Error(errors.New("err")))
-			span.LogFields(log.String("exampleKey", "stringValue"))
-		}
-	}
+    if cspan, ok := ctx.Get("tracing-context"); ok {
+        if span, ok := cspan.(opentracing.Span); ok {
+            span.SetTag("error", true)
+            span.LogFields(log.Error(errors.New("err")))
+            span.LogFields(log.String("exampleKey", "stringValue"))
+        }
+    }
 }
 ```
