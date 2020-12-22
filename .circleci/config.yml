@@ -1,0 +1,50 @@
+version: 2.1
+
+executors:
+  node:
+    docker:
+      - image: circleci/node:10
+
+commands:
+  install:
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn workspace example install --frozen-lockfile
+      - save_cache:
+          name: Save node_modules Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+
+jobs:
+  deploy:
+    executor: node
+    steps:
+      - install
+      - run:
+          name: Build Docs
+          command: yarn workspace example build
+      - run:
+          name: Install TCB
+          command: yarn global add @cloudbase/cli
+      - run:
+          name: TCB Login
+          command: $(yarn global bin)/tcb login --apiKeyId $API_KEY_ID --apiKey $API_KEY
+      - run:
+          name: TCB Publish
+          command: $(yarn global bin)/tcb hosting deploy -e $ENV_ID example/public
+
+workflows:
+  version: 2
+  checks:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only: blog
