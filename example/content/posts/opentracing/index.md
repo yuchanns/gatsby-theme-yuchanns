@@ -3,7 +3,6 @@ title: 链路追踪建设分享
 date: 2020-12-22T15:56:32.274Z
 description: "链路追踪建设分享"
 category: "architechure"
-wip: true
 tags:
   - "open tracing"
   - "链路追踪"
@@ -20,7 +19,7 @@ tags:
 * 通过请求和响应状态可以为链路日志打上状态标签，然后上报到Prometheus统计指标。可以另外扩展出指标异常统计告警机制，及时主动获知错误发生，在下游反馈前解决问题
 
 ## 原理简述
-![图片来自网络](https://note.youdao.com/yws/api/personal/file/BC968CFCB5004F35B1DFC2F7516BB3A7?method=download&shareKey=dd19f0d169fd97d1c8cccf80e33a3602)
+![](./jaeger-query.png)
 
 > [Jaeger参考文档](https://www.jaegertracing.io/docs/1.11/client-libraries/)
 
@@ -36,7 +35,7 @@ tags:
 * 一个trace由多个span组成，表示了一次完整的链路追踪，按照span的父子关系向下排列，以时间轴的方式展示。
 
 ## 落地实践
-![](https://note.youdao.com/yws/api/personal/file/WEBc38cd9cb8c01d88fd568816718799954?method=download&shareKey=79fe274cf2d9b0e687319c42ea4af187)
+![](./opentracing.png)
 
 * 服务端集成上报中间件
 * 部署Jaeger服务端，包括Jaeger Agent和Jaegger Collector
