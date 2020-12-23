@@ -49,36 +49,54 @@ tags:
 > 代码库地址：[yuchanns/bullets](https://github.com/yuchanns/bullets)
 
 ```bash
-go get github.com/yuchanns/bullets@v0.0.12
+go get -u github.com/yuchanns/bullets
 ```
 
 * 使用中间件
 ```go
+package main
+
+import (
+	"context"
+	"github.com/gin-gonic/gin"
+	"github.com/yuchanns/bullets/common"
+	"github.com/yuchanns/bullets/common/middlewares"
+	"os"
+)
+
 func main() {
-    g := gin.Default()
-    // 服务名
-    serviceName := "openapi-service"
-    // 上报agent地址
-    agentAddr := os.Getenv("OPENTRACING_AGENT")
-    // 操作前缀
-    operationPrefix := []byte("api-request-")
-    opentracerCloseFunc, opentracerMiddleware, err := middlewares.BuildOpenTracerInterceptor(serviceName, agentAddr, operationPrefix))
-    if err != nil {
-        common.Logger.Error(context.Background(), err)
-    } else {
-        g.Use(opentracerMiddleware)
-    }
+	g := gin.Default()
+	// 服务名
+	serviceName := "openapi-service"
+	// 上报agent地址
+	agentAddr := os.Getenv("OPENTRACING_AGENT")
+	// 操作前缀
+	operationPrefix := []byte("api-request-")
+	opentracerCloseFunc, opentracerMiddleware, err := middlewares.BuildOpenTracerInterceptor(serviceName, agentAddr, operationPrefix)
+	if err != nil {
+		common.Logger.Error(context.Background(), err)
+	} else {
+		defer opentracerCloseFunc()
+		g.Use(opentracerMiddleware)
+	}
 }
 ```
 * 自定义打tag
 ```go
-func CustomTag(ctx *gin.Context, err error, data interface{}) {
-    if cspan, ok := ctx.Get("tracing-context"); ok {
-        if span, ok := cspan.(opentracing.Span); ok {
-            span.SetTag("error", true)
-            span.LogFields(log.Error(errors.New("err")))
-            span.LogFields(log.String("exampleKey", "stringValue"))
-        }
-    }
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/opentracing/opentracing-go"
+	"github.com/opentracing/opentracing-go/log"
+	"github.com/pkg/errors"
+)
+
+func CustomTag(ctx *gin.Context) {
+	if cspan, ok := ctx.Get("tracing-context"); ok {
+		if span, ok := cspan.(opentracing.Span); ok {
+			span.SetTag("error", true)
+			span.LogFields(log.Error(errors.New("err")))
+			span.LogFields(log.String("exampleKey", "stringValue"))
+		}
+	}
 }
 ```
