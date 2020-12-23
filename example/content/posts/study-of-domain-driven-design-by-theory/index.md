@@ -1,9 +1,8 @@
 ---
-title: 领域驱动设计学习笔记
+title: 领域驱动设计理论学习笔记
 date: 2020-12-20T16:38:16.996Z
-description: "领域驱动设计学习笔记"
+description: "领域驱动设计理论学习笔记"
 category: "architechure"
-wip: true
 tags:
   - "Domain Driven Design"
   - "DDD"
