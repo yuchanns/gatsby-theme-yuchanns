@@ -23,11 +23,5 @@ module.exports = {
       resolve: `gatsby-theme-yuchanns`,
       options: {},
     },
-    {
-      resolve: `gatsby-transformer-remark`,
-      options: {
-        plugins: [`gatsby-remark-responsive-iframe`],
-      },
-    },
   ],
 }
