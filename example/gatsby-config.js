@@ -13,6 +13,7 @@ module.exports = {
     nav: [
       { 'name': '首页', 'url': '/' },
       { 'name': 'Awesome', 'url': '/r/readme/awesome' },
+      { 'name': 'Sina News', 'url': '/r/news/sina' },
       { 'name': 'Yuc\'s Anime', 'url': '//yuc.wiki/', 'external': true }
     ],
     siteUrl: 'https://github.com/yuchanns'
@@ -21,6 +22,12 @@ module.exports = {
     {
       resolve: `gatsby-theme-yuchanns`,
       options: {},
+    },
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        plugins: [`gatsby-remark-responsive-iframe`],
+      },
     },
   ],
 }
