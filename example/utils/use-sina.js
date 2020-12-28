@@ -16,7 +16,7 @@ export const fetchSinaNews = location => {
           li.appendChild(p);
           fragment.appendChild(li);
         });
-
+        list.innerHTML = '';
         list.appendChild(fragment);
       })
   }

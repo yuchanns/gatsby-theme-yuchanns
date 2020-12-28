@@ -7,5 +7,6 @@ tags:
     - "news"
     - "sina"
 ---
-<ol class="list"></ol>
-
+<ol class="list">
+    正在载入新闻...
+</ol>
