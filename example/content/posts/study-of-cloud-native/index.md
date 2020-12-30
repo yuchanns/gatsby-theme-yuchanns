@@ -7,6 +7,6 @@ tags:
   - "云原生"
   - "cloud native"
 ---
-![](./cloud-native.png)
+![](./cloud-native-app-development@3x.png)
 
 本文为**O'Reilly**书籍`Cloud Native: Using Containers, Functions, and Data to Build Next-Generation Applications`阅读笔记。
