@@ -16,12 +16,13 @@ module.exports = {
       { 'name': 'Sina News', 'url': '/r/news/sina' },
       { 'name': 'Yuc\'s Anime', 'url': '//yuc.wiki/', 'external': true }
     ],
-    siteUrl: 'https://github.com/yuchanns'
+    siteUrl: 'https://www.yuchanns.xyz'
   },
   plugins: [
     {
       resolve: `gatsby-theme-yuchanns`,
       options: {},
     },
+    `gatsby-plugin-sitemap`,
   ],
 }
