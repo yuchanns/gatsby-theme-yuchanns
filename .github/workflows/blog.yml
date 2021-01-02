@@ -27,4 +27,32 @@ jobs:
         with:
           name: gatsby-theme-yuchanns-sitemap
           path: example/public/sitemap.xml
+      - name: Upload docs
+        uses: actions/upload-artifact@v2
+        with:
+          name: gatsby-theme-yuchanns-docs
+          path: example/public
+  publish:
+    runs-on: ubuntu-latest
+    needs: [build]
+    env:
+      TCB_API_KEY_ID: ${{ secrets.TCB_API_KEY_ID }}
+      TCB_API_KEY: ${{ secrets.TCB_API_KEY }}
+      TCB_ENV_ID: ${{ secrets.TCB_ENV_ID }}
+    steps:
+      - uses: actions/setup-node@v1
+      - name: Download docs
+        uses: actions/download-artifact@v2
+        with:
+          name: gatsby-theme-yuchanns-docs
+          path: example/public
+      - name: TCB install
+        run: yarn global add @cloudbase/cli
+      - name: TCB login
+        run: $(yarn global bin)/tcb login --apiKeyId $TCB_API_KEY_ID --apiKey $TCB_API_KEY
+      - name: TCB clean
+        run: |
+          yes | $(yarn global bin)/tcb hosting delete -e $TCB_ENV_ID
+      - name: TCB publish
+        run: $(yarn global bin)/tcb hosting deploy -e $TCB_ENV_ID example/public
         
