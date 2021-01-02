@@ -1,0 +1,30 @@
+name: Blog
+on:
+  push:
+    branches:
+      - blog
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-blog-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-blog-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+      - name: Install dependencies
+        run: yarn workspace example install
+      - name: Build docs
+        run: yarn workspace example build
+      - name: Upload sitemap file
+        uses: actions/upload-artifact@v2
+        with:
+          name: gatsby-theme-yuchanns-sitemap
+          path: example/public/sitemap.xml
+        
