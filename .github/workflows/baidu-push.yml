@@ -1,0 +1,24 @@
+name: Baidu-push
+on:
+  push:
+    branches:
+      - blog
+  schedule:
+    - cron: '*/120 * * * *'
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download sitemap file
+        uses: dawidd6/action-download-artifact@v2
+        with: 
+          name: gatsby-theme-yuchanns-sitemap
+          workflow: blog.yml
+      - name: Parse and push
+        env:
+          BAIDU_PUSH_SITE: ${{ secrets.BAIDU_PUSH_SITE }}
+          BAIDU_PUSH_TOKEN: ${{ secrets.BAIDU_PUSH_TOKEN }}
+        run: |
+          chmod +x push.sh
+          ./push.sh
