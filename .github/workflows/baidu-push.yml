@@ -4,7 +4,7 @@ on:
     branches:
       - blog
   schedule:
-    - cron: '*/120 * * * *'
+    - cron: '0 6,12 * * *'
 jobs:
   push:
     runs-on: ubuntu-latest
