@@ -220,7 +220,7 @@ protoc -I . --go_out=plugins=grpc:. *.proto
 
 在这个文件中，提供了`RegisterGreeterServer`方法，接受一个`*grpc.Server`和一个实现了`GreeterServer`接口的结构体指针。
 
-我们只要实现对应的接口，在实现中编写具体的业务逻辑，然后通过`RegisterGreeterServer`注册到`grpc.Server`，接着启动，就实现了go grpc服务端的编写：
+我们只要在代码中实现对应的接口，在实现中编写具体的业务逻辑，然后通过`RegisterGreeterServer`注册到`grpc.Server`，接着启动，就实现了go grpc服务端的编写：
 ```go
 package main
 
@@ -264,3 +264,56 @@ func (s *GreeterServer) SayHello(c context.Context, req *greeter.HelloRequest) (
 	}, nil
 }
 ```
+运行代码，启动grpc服务端。
+### 生成PHP端代码
+```bash
+protoc -I ./proto --php_out=. --grpc_out=. --plugin=protoc-gen-grpc=./grpc/bazel-bin/src/compiler/grpc_php_plugin *.proto 
+```
+这段命令表达的意思是，使用当前路径(`-I .`)，在当前目录生成php代码(`--php_out=.`)，grpc代码生成在当前目录(`--grpc_out=.`)，指定插件路径(`--plugin=protoc-gen-grpc=./grpc/bazel-bin/src/compiler/grpc_php_plugin`)，编译源为当前目录下的所有`proto`文件(`*.proto`)。注意`.`不要忽略，它表示当前目录。
+
+结果将会在当前目录生成两个文件夹`GPBMetadata`和`Greeter`，分别包含了`message`和gprc服务代码。
+
+然后我们通过`composer`安装`grpc/grpc:1.34`的代码库，引用生成的代码编写客户端请求代码：
+```php
+<?php
+require __DIR__ . "/vendor/autoload.php";
+require __DIR__ . "/proto/GPBMetadata/Greeter.php";
+require __DIR__ . "/proto/Greeter/GreeterClient.php";
+require __DIR__ . "/proto/Greeter/HelloRequest.php";
+require __DIR__ . "/proto/Greeter/HelloResponse.php";
+
+$client = new Greeter\GreeterClient('localhost:9090', [
+    'credentials' => Grpc\ChannelCredentials::createInsecure(),
+    ]);
+ $request = new Greeter\HelloRequest();
+ $name = "php";
+ $request->setName($name);
+ list($reply, $status) = $client->SayHello($request)->wait();
+ $msg = $reply->getMsg();
+ echo $msg,PHP_EOL;
+```
+运行脚本，即可成功请求grpc服务器和获取返回信息。
+
+### 生成node端代码
+node端是使用起来最简单的。无需生成代码，直接引用原始proto文件就可以使用：
+```js
+const PROTO_PATH = __dirname + '/greeter.proto'
+const grpc = require('grpc')
+const protoLoader = require('@grpc/proto-loader')
+const packageDefinition = protoLoader.loadSync(PROTO_PATH)
+const greeter = grpc.loadPackageDefinition(packageDefinition).greeter
+const client = new greeter.Greeter("localhost:9090", grpc.credentials.createInsecure())
+client.SayHello({name: "node"}, (error, resp) => {
+    if (error) {
+        console.log(error)
+        return
+    }
+    console.log(resp)
+})
+```
+运行脚本，即可成功请求grpc服务器和获取返回信息。
+
+## 使用Grpc Gateway转发http请求
+接下来是服务端专场——往往我们写一个服务端不仅仅是接收服务间的rpc调用，有时候还需要提供给外部http请求访问，如果再写一遍支持http请求的服务，未免造成了重复编码浪费时间，一旦接口出现变更，可能还要维护着两套代码。
+
+幸好`grpc-ecosystem`(grpc生态)团队提供了一个[grpc-ecosystem/grpc-gateway](https://github.com/grpc-ecosystem/grpc-gateway)，将http请求转发给grpc服务器，进行同步处理。使用者要做的则是在已有的`proto`文件上，添加一些关于http请求的定义描述，就可以生成支持`grpc-gateway`的代码了。
