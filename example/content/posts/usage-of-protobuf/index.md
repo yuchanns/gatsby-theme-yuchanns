@@ -48,7 +48,7 @@ protoc --version
 > 注意，用Linux内核的操作系统安装protoc时，很高概率的情况下还需执行`ldconfig`才能成功执行`protoc --version`。
 
 ### 安装go插件
-*如果你关注的不是go服务端的部分，可以跳过这一节*
+*如果你关注的不是go服务端的部分，可以跳过这一节。*
 
 **注意**，这里笔者使用的是`v1.3`版本的插件。v1.4版本在一些语法和命令上有所不同，会出现不兼容的情况，请锁好版本。
 
@@ -67,11 +67,11 @@ GO111MODULE=on GOPROXY=https://goproxy.cn go get github.com/grpc-ecosystem/grpc-
 > 注意，如果操作系统是macOS，还需要把两个插件(`protoc-gen-go`和`protoc-gen-grpc-gateway`)从`$GOPATH/bin/`移动到`/usr/local/go/bin`下才能在使用时自动寻找到。
 
 ### 安装php插件
-*如果你关注的不是php客户端的部分，可以跳过这一节*
+*如果你关注的不是php客户端的部分，可以跳过这一节。*
 
 安装php的插件是三种语言中最麻烦的一个步骤。
 
-首先确认你的php环境包含`pecl`，然后`grpc-1.34.0`和`protobuf`的扩展:
+首先确认你的php环境包含`pecl`，然后安装`grpc-1.34.0`和`protobuf`的扩展:
 ```bash
 pecl install grpc-1.34.0 protobuf
 ## 找到php.ini的位置
@@ -96,6 +96,8 @@ echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" |
 apt update
 apt install bazel
 ```
+> 如果使用macOS则直接使用**Homebrew**安装`brew install bazel`。
+
 然后Clone[grpc/grpc](https://github.com/grpc/grpc)，并编译安装：
 ```bash
 git clone git@github.com:grpc/grpc.git
@@ -106,7 +108,7 @@ bazel build src/compiler:grpc_php_plugin
 完成之后会在`grpc/bazel-bin/src/compiler`下生成一个`grpc_php_plugin`，供后续使用。
 
 ### 安装node插件
-*如果你关注的不是node客户端的部分，可以跳过这一节*
+*如果你关注的不是node客户端的部分，可以跳过这一节。*
 
 Node安装gprc是最简单的。直接在项目根目录(`package.json`所在的目录)安装两个插件就可以了：
 ```bash
@@ -114,4 +116,151 @@ yarn add grpc @grpc/proto-loader
 ```
 
 ## 编写proto
-安装完相应的插件，我们就可以编写proto文件，并生成相应的`grpc`代码了。
+安装完相应的插件，我们就可以编写`proto`文件，并生成相应的`grpc`代码了。
+
+`proto`文件拥有[官方语法参考手册](https://developers.google.com/protocol-buffers/docs/proto3)，这里简单解释些基本概念。
+
+首先，在文件开头，需要声明采用的语法版本为**proto3**，否则默认为**proto2**。
+
+`package`关键字可以用于定义代码生成后的包名、命名空间等。
+
+### 编写message
+
+一次通讯过程中会有请求和响应体，在protobuf中，被定义为`message`关键字。写起来有点像定义结构体那样：
+```protobuf
+syntax = "proto3";
+
+package "greeter"
+
+message HelloRequest {
+  string name = 1;
+  enum Corpus {
+    UNIVERSAL = 0;
+    WEB = 1;
+  }
+  Corpus corpus = 1;
+}
+```
+在这个作为请求体的名为`HelloRequest`的`message`结构中又定义了一些字段，通过`类型 字段名 = 数字标识`的方式编写：
+* 所有类型都是标量类型，支持的类型有`string`、`bool`、`double`、`float`、`int32`、`int64`等，可以参考[官方手册](https://developers.google.com/protocol-buffers/docs/proto3#scalar)获得；
+* 注意这里面还有一个特殊的类型，`enum`(枚举)，用于限定某个字段的侯选值范围。
+* 同一个`message`的每个字段的数字标识必须不重复，这是用于在protobuf压缩成的二进制中识别使用的标记。支持范围从1到2<sub>29</sub> - 1(536_870_911)；
+* 字段名也不能重复。
+
+同样，我们可以再定义一个`HelloResponse`，作为响应体:
+```protobuf
+/* 这里可以添加注释
+ * 可以是多行注释 */
+message HelloResponse {
+  string msg = 1; // 也可以用这种方式添加注释
+}
+```
+如果对`message`做出了更新，删除字段或数字标识等操作，需要避免后来人重用这些字段或数字标识造成的问题，这时候使用`reserved`关键字指定保留字段和数字标识。一旦这些字段或标识被使用，编译器将会提示：
+```protobuf
+message Foo {
+  reserved 2, 15, 9 to 11;
+  reserved "foo", "bar";
+}
+```
+如果希望`message`中某个字段可以重复数次，可以在字段前面加上`repeated`关键字。
+
+`message`之间也可以嵌套使用，如：
+```protobuf
+message SearchResponse {
+  repeated Result results = 1;
+}
+
+message Result {
+  string url = 1;
+  string title = 2;
+  repeated string snippets = 3;
+}
+```
+以及可以通过`import`关键字引入其他`proto`文件(在编译时需要指定所有文件所在的路径)：
+```protobuf
+import other "myproject/other_protos.proto";
+```
+如果你希望一个`message`中两个字段二选一，可以使用`oneof`关键字：
+```protobuf
+message SampleMessage {
+  oneof test_oneof {
+    string name = 4;
+    SubMessage sub_message = 9;
+  }
+}
+```
+定义一个字典：
+```protobuf
+message SampleMessage {
+  map<key_type, value_type> map_field = N;
+}
+注意字典不可使用`repeated`关键字。
+```
+
+### 编写service
+有了请求和响应，接下来就是定义通信服务。
+
+使用`service`关键字可以定义一个通信服务的接口；然后通过`rpc`关键字定义路由(接口的方法)，这一步骤将会用上前面定义的`message`结构体，将他们组合起来，表达请求和响应的内容结构：
+```protobuf
+service Greeter {
+  rpc SayHello(HelloRequest) returns (HelloResponse);
+}
+```
+
+## 生成对应语言的代码
+编写完`proto`文件，我们就可以对其进行编译了，请确保环境安装环节没有缺漏，否则会失败。
+### 生成go服务端代码
+使用安装好的**protobuf**编译器`protoc`，它具有一个flag参数`-I`，表示`Import Path`，以及对应语言的`--lang_out`参数。
+```bash
+protoc -I . --go_out=plugins=grpc:. *.proto
+```
+这段命令表达的意思是，使用当前路径(`-I .`)，在当前目录生成go代码并且使用grpc插件(`--go_out=plugins=grpc:.`)，编译源为当前目录下的所有`proto`文件(`*.proto`)。注意`.`不要忽略，它表示当前目录。
+
+于是我们可以在当前目录找到一个`greeter.pb.go`的文件。
+
+在这个文件中，提供了`RegisterGreeterServer`方法，接受一个`*grpc.Server`和一个实现了`GreeterServer`接口的结构体指针。
+
+我们只要实现对应的接口，在实现中编写具体的业务逻辑，然后通过`RegisterGreeterServer`注册到`grpc.Server`，接着启动，就实现了go grpc服务端的编写：
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"log"
+	"net"
+
+	"github.com/yuchanns/grpc-practise/proto/greeter"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
+)
+
+func main() {
+	l, err := net.Listen("tcp", ":9090")
+	if err != nil {
+		log.Fatalf("failed to create listener: %s", err)
+	}
+	srv := grpc.NewServer()
+
+	greeterServer := &GreeterServer{}
+	greeter.RegisterGreeterServer(srv, greeterServer)
+
+	reflection.Register(srv)
+
+	log.Println("start at :9090")
+
+	if err := srv.Serve(l); err != nil {
+		log.Fatalf("failed to serve: %s", err)
+	}
+}
+
+// GreeterServer implements greeter.GreeterServer
+type GreeterServer struct{}
+
+// SayHello returns a grpc response
+func (s *GreeterServer) SayHello(c context.Context, req *greeter.HelloRequest) (*greeter.HelloResponse, error) {
+	return &greeter.HelloResponse{
+		Msg: fmt.Sprintf("hello, %s", req.Name),
+	}, nil
+}
+```
