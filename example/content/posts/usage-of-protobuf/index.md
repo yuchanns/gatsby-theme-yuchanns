@@ -20,12 +20,13 @@ protobuf是谷歌开发的一款跨平台跨语言强扩展性的用于序列化
 ## 环境安装
 * 安装环境
 * 安装插件
+
 ### 安装protoc
 protoc是protobuf的编译器。就像其他编程语言，用户编写代码，编译器将其编译成其他后端语言，protoc可以将用户编写的IDL编译成其他后端语言。具体编译成什么语言则根据稍后安装的语言插件以及用户操作而定。
 
 直接从[protocolbuffers/protobuf](https://github.com/protocolbuffers/protobuf)下载编译安装。
 
-```sh
+```bash
 # 下载
 wget https://github.com/protocolbuffers/protobuf/releases/download/v3.14.0/protobuf-all-3.14.0.tar.gz
 # 解压
@@ -48,11 +49,11 @@ protoc --version
 > v1.3对gateway的支持也和v1.4不同，语法上也有所不同。
 
 首先安装生成go语言代码的插件v1.3版本[protoc-gen-go](https://github.com/golang/protobuf/tree/master/protoc-gen-go)。
-```sh
+```bash
 GO111MODULE=on GOPROXY=https://goproxy.cn go get github.com/golang/protobuf/protoc-gen-go@v1.3
 ```
 然后安装`grpc gateway`插件，这里我们使用v1插件，理由同上，避免不兼容情况。
-```sh
+```bash
 GO111MODULE=on GOPROXY=https://goproxy.cn go get github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway@v1
 ```
 > 注意，如果操作系统是macOS，还需要把两个插件(`protoc-gen-go`和`protoc-gen-grpc-gateway`)从`$GOPATH/bin/`移动到`/usr/local/go/bin`下才能在使用时自动寻找到。
