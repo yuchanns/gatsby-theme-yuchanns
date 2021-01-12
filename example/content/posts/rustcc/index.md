@@ -1,6 +1,6 @@
 ---
 title: Rust中文社区
-date: 2021-01-13T00:13:22.427Z
+date: 2020-01-13T00:13:22.427Z
 description: "Rust中文社区"
 category: "community"
 tags:

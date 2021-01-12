@@ -1,6 +1,6 @@
 ---
 title: Go Playground
-date: 2021-01-13T00:13:22.427Z
+date: 2020-01-13T00:13:22.427Z
 description: "Go Playground"
 category: "playground"
 tags:
