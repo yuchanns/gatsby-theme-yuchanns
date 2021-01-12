@@ -1,7 +1,7 @@
 export const fetchSinaNews = location => {
-  if (location.pathname === '/r/news/sina' || location.pathname === '/') {
+  if (location.pathname === '/r/news/sina') {
     fetch('https://ruanyf.github.io/sina-news/rss.json')
-      .then(async function (response) {
+      .then(async response => {
         const res = await response.json();
         const items = res.items;
 
@@ -16,8 +16,10 @@ export const fetchSinaNews = location => {
           li.appendChild(p);
           fragment.appendChild(li);
         });
-        list.innerHTML = '';
-        list.appendChild(fragment);
+        if (list) {
+          list.innerHTML = '';
+          list.appendChild(fragment);
+        }
       })
   }
 }

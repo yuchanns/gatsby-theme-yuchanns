@@ -13,6 +13,9 @@ module.exports = {
     nav: [
       { 'name': '首页', 'url': '/' },
       { 'name': 'Awesome', 'url': '/r/readme/awesome' },
+      { 'name': 'RustCC', 'url': '/r/community/rustcc' },
+      { 'name': 'Rust Playground', 'url': '/r/playground/playground-rust' },
+      { 'name': 'Go Playground', 'url': '/r/playground/playground-go' },
       { 'name': 'Sina News', 'url': '/r/news/sina' },
       { 'name': 'Yuc\'s Anime', 'url': '//yuc.wiki/', 'external': true }
     ],
