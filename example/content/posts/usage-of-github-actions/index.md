@@ -7,6 +7,7 @@ tags:
   - "github actions"
   - "devops"
 ---
+![](github-action-01.png)
 ## 前言
 笔者常常在github上使用一些**XXexample**的仓库记录使用某种语言的过程中对第三方包的试用或者验证一些思路和想法，时间一长，整个仓库就显得杂乱无比。
 

@@ -3,7 +3,6 @@ title: Rust语言精要
 date: 2021-01-16T23:23:00.427Z
 description: "Rust语言精要"
 category: "rust"
-wip: true
 tags:
     - "essentials"
     - "rust"
