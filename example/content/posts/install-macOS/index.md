@@ -45,3 +45,5 @@ sudo /Applications/Install\ macOS\ BigSur.app/Contents/Resources/createinstallme
 选择`从外部介质安装BigSur`，按照提示选择安装到新启动盘中。
 
 大概一二十分钟后安装完成，系统自动重启，进入到迁移助手，将备份恢复到新的启动盘，完成安装。
+
+![](./storage.png)
