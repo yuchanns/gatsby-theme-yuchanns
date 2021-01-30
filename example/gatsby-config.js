@@ -1,14 +1,14 @@
 module.exports = {
   siteMetadata: {
-    title: '科学世纪的炼金工坊',
-    description: '某个程序员的博客',
+    title: '代码炼金工坊',
+    description: '代码炼金工坊',
     card: {
       name: 'yuchanns',
       avatar: '/yuchanns.jpg',
       nick: '科学搜查官',
       job: '后端开发工程师',
       location: 'Shenzhen, China',
-      desc: '咖啡、代码与键盘',
+      desc: '追寻计算机炼金术的贤者之石',
     },
     nav: [
       { 'name': '首页', 'url': '/' },
