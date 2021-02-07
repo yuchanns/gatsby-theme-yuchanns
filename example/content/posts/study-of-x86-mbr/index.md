@@ -15,6 +15,8 @@ tags:
 >
 > 笔者将之发表到博客上，一方面是作为笔记存档，另一方面希望对同在阅读本书的小伙伴起到理解帮助作用。
 
+![](./hello_yuchanns.jpg)
+
 ## 计算机的启动过程
 > 前置概念
 
@@ -179,9 +181,26 @@ mov ax, 0xb800
 ; 然后从通用寄存器传到段寄存器
 mov es, ax
 ; 指定数据宽度为字节，把字面值H的8位ASCII码100 1000B
-; 即0x48H传送到es寄存器的段内偏移地址0x00上
+; 即0x48H传送到es寄存器的段内偏移地址0x7C0上
 ; 这里使用了段超越前缀指定使用的寄存器
-mov byte [es:0x00] 'H'
+mmov byte [0x7C0], 'H'
 ; 然后在相邻的下个字节处传送颜色信息指令
-mov byte [es:0x01] 0x07
+; 继续以此类推
+mov byte [0x7C1], 0x04
+mov byte [0x7C2], 'E'
+mov byte [0x7C4], 'L'
+mov byte [0x7C6], 'L'
+mov byte [0x7C8], 'O'
+mov byte [0x7CA], ' '
+mov byte [0x7CC], ' '
+mov byte [0x7CE], 'Y'
+mov byte [0x7CF], 0x03
+mov byte [0x7D0], 'U'
+mov byte [0x7D2], 'C'
+mov byte [0x7D4], 'H'
+mov byte [0x7D6], 'A'
+mov byte [0x7D8], 'N'
+mov byte [0x7DA], 'N'
+mov byte [0x7DC], 'S'
+jmp $%
 ```
