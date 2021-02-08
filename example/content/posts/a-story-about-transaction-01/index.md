@@ -10,7 +10,7 @@ tags:
 ---
 > **一个事务的故事**是一系列数据库技术短文，由作者-[没什么调性](https://github.com/MrTrans)连载投稿。
 
-![hello](./xiaoming.png)
+![hello](./xiaoming.jpg)
 
 小明要给小王转100块钱，而银行卡只有100块钱，银行就要做增删查改，一个事务完成。
 
