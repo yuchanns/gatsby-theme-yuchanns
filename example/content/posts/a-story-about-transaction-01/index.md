@@ -40,7 +40,7 @@ A隔离级别下，直接返回记录上的最新值，没有视图概念。
 D隔离级别下，直接用加锁方式避免并行访问。
 
 ### transaction-isolation的值设置成READ-COMMITTED
-```mysql
+```sql
 mysql> show variables like 'transaction_isolation';
 
 +-----------------------+----------------+
@@ -72,7 +72,7 @@ mysql> show variables like 'transaction_isolation';
 set autocommit=0的命令，导致如果是长链接，就会导致以为的长事务，所以建议设为1。
 
 可以在information_schema库innodb_trx这个表中查询长事务。
-```mysql
+```sql
 select * from information_schema.innodb_trx where TIME_TO_SEC(timediff(now(),trx_started))>60
 ```
 
