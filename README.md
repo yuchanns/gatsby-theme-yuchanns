@@ -1,6 +1,11 @@
 # gatsby-theme-yuchanns
 a blog theme for gatsby that combine github and reddit style.
 
+## ATTENTION PLEASE
+**THIS REPO HAS BEEN ARCHIVED !!!**
+
+> Feeling devastated for some reason and becoming depressed about this repo.
+
 ## Status
 ![workflow Blog](https://github.com/yuchanns/gatsby-theme-yuchanns/workflows/Blog/badge.svg)
 
